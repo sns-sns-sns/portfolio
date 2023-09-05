@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Studio Nikos Stephou</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+
+
+    body {
+      background-color: lightgrey;
+      color: black;
+font-family: 'Martian Mono', monospace;
+       font-size: 13px;
+
+    }
+
+    .paragraph-1 {
+  font-size: 11px;
+}
+
+a {
+      color: black;
+      text-decoration: underline;
+    }
+
+p {
+  margin-top:5px;
+  margin-bottom: 5px;
+}
+
+  .w3-half.option1 {
+      display: flex;
+      justify-content: flex-start;
+      position: relative;
+    }
+
+    .w3-container {
+
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 10px;
+    }
+
+    .project-header,
+    .project-details {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .project-details span,
+    .project-header span {
+      font-weight: bold;
+    }
+
+    .project-header {
+      background-color: white;
+      padding: 0px;
+    }
+
+
+/* CSS for the image slider */
+
+#drawer-36 {
+  height: 100%; /* Set your desired fixed height here */
+}
+#drawer-35 {
+  height: 100%; /* Set your desired fixed height here */
+}
+
+/* Keep the slider image aspect ratio and fit it within the container without cropping */
+.slider-image {
+
+
+}
+
+
+
+
+ .w3-half.option1.active .dropdown-menu {
+      display: block;
+}
+
+    #image-column {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+
+    }
+
+    #image-column img {
+      max-width: 99%;
+      max-height: 99%;
+    }
+
+@media (max-width: 600px) {
+
+
+.paragraph-1 {
+  font-size: 10px;
+}
+
+
+  /* Ensure images fit within the image slider container */
+  .slider-image {
+    object-fit: contain;
+    max-height: 0%;
+  }
+
+  .option2 {
+    display: none;
+  }
+
+  .option3 {
+    margin-left: 12px;
+  }
+
+
+    .w3-half.option1 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 0px;
+    justify-content: flex-end;
+  }
+  
+
+   body {
+    font-size: 10px;
+  }
+}
+
+
+  </style>
+
+
+</head>
+
+<body>
+
+
+
+    <!-- HEADER -->
+
+<div class="header w3-bar w3-left">
+<div class="w3-half" style="margin-top: 10px">
+<a href="https://sns-sns-sns.github.io/auf-etwas/about.html" class="w3-bar-item"style="width:50s%"><b>Studio Nikos Stephou</b></a>
+    </div>
+
+<div class="w3-half option1" id="logoContainer">
+<a href="#" onclick="toggleDropdown()">
+<img src="logo-4.png" alt="Logo" style="max-height: 50px; margin-top: 15px; margin-bottom: 5px; margin-left:5px ;">
+    </a>
+</div>
+
+</div>
+
+<div class="header w3-bar w3-left" style="margin-top: 10px;">
+
+<div class="w3-half option2" >
+<p style="margin-left: 15px;">
+
+</p>
+
+</div>
+
+<div class="w3-half option3">
+<p style="width:45s%; margin-right: 10px; text-align:left;">
+
+<p style="margin-left: 5px; margin-right: 30px;">Since 2016 the studio provides exceptional <u>graphic design</u> solutions for highly acclaimed artist profiles, renowned cultural institutions, and corporate organizations.<br><br>We’re showcasing an extensive portfolio encompassing <u>branding, digital illustration, website design, communication material, and printed matter such as books, magazines, and catalogues</u>. It also functions as as a multidisciplinary art, sound and design hub. In addition to hosting <u>solo exhibitions and performances</u>, we have undertaken <u>art direction and curation</u> for a range of creative projects.</p>
+
+
+</p>
+</p>
+</div>
+
+
+</div>
+
+<header>
+
+
+<!-- ARCHIVE -->
+
+
+
+</header>
+
+<main class="w3-container">
+
+<div>
+<div class="project-header" style="margin-top: 10px; background-color:lightgray;">
+<span><b>Project</b></span>
+<span></span>
+<span><b>Services</b></span>
+<span style="text-align: right;"><b>Date</b></span>
+</div>
+</div>
+
+
+
+
+  <!-- Project 36 -->
+
+
+<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(36)">
+<p>Auf Etwas</p>
+<p>Eva Mikelatou</p>
+<p >Branding / Website Design / Web Development</p>
+<p style="text-align: right;">2023</p>
+</div>
+
+ <!-- drawer-35 -->
+
+<div class="w3-container w3-hide" id="drawer-36">
+  <div class="row">
+
+    <!-- Text column -->
+    <div class="col-md-6" id="text-column">
+
+      <a href="http://aufetwas.com/">Visit Website</a>
+      <br><br>
+      <p class="paragraph-1">Auf Etwas is a Berlin-based creative studio focusing on digital art and culture, where we push the boundaries of sonic conventions, foster inclusivity, drive social impact and provide a platform for diverse voices.<br><br>
+
+Established in 2011 in Athens, our journey began in the music industry, evolving into artist management, artist liaison, and stage management for high-end artists and venues. Over time, our expertise grew, leading us to venture into full-length films, film festivals, and fashion productions while collaborating with Berlinale, Cannes Film Festival, and Berlin Fashion Week.<br><br>
+
+Driven by a vision to revolutionize the creative industry, we aim to bridge diverse disciplines and create a platform for untold stories while ensuring the appropriate representation in front and behind the camera. Through launching our documentary-style video campaigns for MTV, we have started capturing authentic narratives that address current social taboos and forge profound connections with communities.
+<br><br>
+Led by Eva Mikelatou, an Athens-born, Berlin-based creative producer with a background in music, film, and psychology. Whether it's through sound, film, or other multimedia, Auf Etwas is dedicated to empowering underrepresented communities and redefining the way people experience culture by combining innovative and experimental approaches.</p>
+
+    </div>
+
+    <!-- Images -->
+
+    <div class="col-md-6" id="image-column">
+        <img src="project-34-1.png" alt="Project 1 Image">
+    </div>
+    <div class="col-md-6" id="image-column">
+        <img src="project-34-2.png" alt="Project 1 Image">
+    </div>
+    <div class="col-md-6" id="image-column">
+        <img src="project-34-3.png" alt="Project 1 Image">
+    </div>
+
+</div>
+</div>
+
+
+ <!-- Project 35 -->
+
+
+<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(35)">
+<p>Auf Etwas</p>
+<p>Eva Mikelatou</p>
+<p >Branding / Website Design / Web Development</p>
+<p style="text-align: right;">2023</p>
+</div>
+
+ <!-- drawer-35 -->
+
+<div class="w3-container w3-hide" id="drawer-35">
+  <div class="row">
+
+    <!-- Text column -->
+    <div class="col-md-6" id="text-column">
+
+      <a href="http://aufetwas.com/">Visit Website</a>
+      <br><br>
+      <p>Auf Etwas is a Berlin-based creative studio focusing on digital art and culture, where we push the boundaries of sonic conventions, foster inclusivity, drive social impact and provide a platform for diverse voices.<br><br>
+
+Established in 2011 in Athens, our journey began in the music industry, evolving into artist management, artist liaison, and stage management for high-end artists and venues. Over time, our expertise grew, leading us to venture into full-length films, film festivals, and fashion productions while collaborating with Berlinale, Cannes Film Festival, and Berlin Fashion Week.<br><br>
+
+Driven by a vision to revolutionize the creative industry, we aim to bridge diverse disciplines and create a platform for untold stories while ensuring the appropriate representation in front and behind the camera. Through launching our documentary-style video campaigns for MTV, we have started capturing authentic narratives that address current social taboos and forge profound connections with communities.
+<br><br>
+Led by Eva Mikelatou, an Athens-born, Berlin-based creative producer with a background in music, film, and psychology. Whether it's through sound, film, or other multimedia, Auf Etwas is dedicated to empowering underrepresented communities and redefining the way people experience culture by combining innovative and experimental approaches.</p>
+
+    </div>
+
+    <!-- Images -->
+
+    <div class="col-md-6" id="image-column">
+        <img src="project-34-1.png" alt="Project 1 Image">
+    </div>
+    <br>    <br>
+    <div class="col-md-6" id="image-column">
+        <img src="project-34-2.png" alt="Project 1 Image">
+    </div>
+    <div class="col-md-6" id="image-column">
+        <img src="project-34-3.png" alt="Project 1 Image">
+    </div>
+
+</div>
+</div>
+
+
+
+  </main>
+
+  <script>
+  function toggleDrawer(projectNumber) {
+    const drawer = document.getElementById(`drawer-${projectNumber}`);
+    if (drawer.classList.contains('w3-hide')) {
+      drawer.classList.remove('w3-hide');
+    } else {
+      drawer.classList.add('w3-hide');
+    }
+  }
+
+
+</script>
+
+
+  </script>
+
+</body>
+</html>

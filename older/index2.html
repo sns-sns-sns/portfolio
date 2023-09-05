@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Studio Nikos Stephou</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono&family=Overpass+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+
+
+    body {
+      background-color: white;
+      color: black;
+font-family: 'Martian Mono', monospace;
+       font-size: 14px;
+    }
+
+a {
+      color: black;
+      text-decoration: underline;
+    }
+
+p {
+  margin-top:5px;
+  margin-bottom: 5px;
+}
+
+  .w3-half.option1 {
+      display: flex;
+      justify-content: flex-start;
+      position: relative;
+    }
+
+    .w3-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 10px;
+      background-color: white;
+    }
+
+    .project-header,
+    .project-details {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .project-details span,
+    .project-header span {
+      font-weight: bold;
+    }
+
+    .project-header {
+      background-color: white;
+      padding: 0px;
+    }
+
+
+/* CSS for the image slider */
+
+
+   #image-slider-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* Maintain a square aspect ratio */
+  paddi-top: 100%;
+  overflow: hidden;
+}
+
+#image-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slider-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s;
+  max-height: 100%; /* Add this line to ensure images fit within the container */
+}
+
+.slider-image.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.slider-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.slider-link {
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  color: black; /* You can change the color to your preference */
+}
+
+ .w3-half.option1.active .dropdown-menu {
+      display: block;
+}
+
+
+
+    @media (max-width: 600px) {
+
+      .w3-half.option1 {
+        position: fixed;
+        top: 0;
+        right: 0;
+        padding: 0px; /* Optional padding to create some space from the edges */
+              justify-content: flex-end;
+
+      }
+
+  #image-slider-container {
+    padding-bottom: 60%;
+  }
+  
+  .slider-image {
+    /* Adjust the max-height value to fit the images within the container */
+    max-height: 100%; /* Change this value as needed */
+  }
+
+
+.option2 {
+        display: none;
+      }
+
+      .option3 {
+        margin-left: 12px;
+      }
+
+  body {
+    font-size: 10px;
+  }
+}
+
+
+  </style>
+
+
+</head>
+
+<body>
+
+
+
+    <!-- HEADER -->
+
+<div class="header w3-bar w3-left">
+<div class="w3-half" style="margin-top: 10px">
+<a href="https://sns-sns-sns.github.io/auf-etwas/about.html" class="w3-bar-item"style="width:50s%">Studio Nikos Stephou</a>
+    </div>
+
+<div class="w3-half option1" id="logoContainer">
+<a href="#" onclick="toggleDropdown()">
+<img src="logo-1.png" alt="Logo" style="max-height: 50px; margin-top: 15px; margin-bottom: 5px; margin-left:5px ;">
+    </a>
+</div>
+
+</div>
+
+<div class="header w3-bar w3-left" style="margin-top: 10px;">
+
+<div class="w3-half option2" >
+<p style="margin-left: 15px;">
+
+</p>
+
+</div>
+
+<div class="w3-half option3">
+<p style="width:45s%; margin-right: 10px; text-align:left;">
+
+<p style="margin-left: 5px;">Nikos Stephou (b. 1990, Nicosia) graduated from the Graphic Design department of Gerrit Rietveld Academie, Amsterdam, in 2017. As a graphic designer, he works with identities, printed matter, and visual research for social design. He has served as art director in creative projects and co-founded the community platform and record label Honest Electronics and the yearly festival The Gathering. He has released two albums under his sound-producing moniker, RAW SILVER, and his tracks have been featured on various international compilations.</p>
+
+
+</p>
+</p>
+</div>
+
+
+</div>
+
+<header>
+
+
+<!-- ARCHIVE -->
+
+
+
+</header>
+
+<main class="w3-container">
+
+<div>
+<div class="project-header" style="margin-top: 10px;">
+<span>Project</span>
+<span></span>
+<span>Services</span>
+<span style="text-align: right;">Date</span>
+</div>
+</div>
+
+
+
+
+    <!-- Project 35 -->
+
+<div class="project-details w3-border-top w3-border-black w3-hover-border-yellow" onclick="toggleDrawer(35)">
+<p>Auf Etwas</p>
+<p>Eva Mikelatou</p>
+<p >Branding / Website Design / Web Development</p>
+<p style="text-align: right;">2023</p>
+</div>
+
+ <!-- drawer-35 -->
+
+<div class="w3-container w3-hide" id="drawer-35">
+  <div class="row">
+   
+
+ <!-- text collumn -->
+
+    <div class="col-md-6" id="image-slider-container-35">
+
+<a href="http://aufetwas.com/">Visit Website</a>
+<br>
+<br>
+      <p>Auf Etwas is a Berlin-based creative studio focusing on digital art and culture, where we push the boundaries of sonic conventions, foster inclusivity, drive social impact and provide a platform for diverse voices.<br><br>
+
+Established in 2011 in Athens, our journey began in the music industry, evolving into artist management, artist liaison, and stage management for high-end artists and venues. Over time, our expertise grew, leading us to venture into full-length films, film festivals, and fashion productions while collaborating with Berlinale, Cannes Film Festival, and Berlin Fashion Week.<br><br>
+
+Driven by a vision to revolutionize the creative industry, we aim to bridge diverse disciplines and create a platform for untold stories while ensuring the appropriate representation in front and behind the camera. Through launching our documentary-style video campaigns for MTV, we have started capturing authentic narratives that address current social taboos and forge profound connections with communities.
+<br><br>
+Led by Eva Mikelatou, an Athens-born, Berlin-based creative producer with a background in music, film, and psychology. Whether it's through sound, film, or other multimedia, Auf Etwas is dedicated to empowering underrepresented communities and redefining the way people experience culture by combining innovative and experimental approaches.</p>
+    </div>
+
+
+    <!-- image and slider -->
+
+    <div class="col-" id="image-slider-container-35">
+      <div id="image-slider-35">
+        <img class="slider-image" src="project-34-1.png" alt="Project 1 Image">
+        <img class="slider-image" src="project-34-2.png" alt="Project 2 Image">
+        <img class="slider-image" src="project-34-3.png" alt="Project 2 Image">
+        <!-- Add more images for the gallery here if needed -->
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+   <!-- Project 34 -->
+
+
+    <div class="w3-border-top w3-border-black w3-hover-border-orange">
+      <div class="project-details" onclick="toggleDrawer(34)">
+        <p>'The Gathering 8!' Festival</p>
+        <p>Honest Electronics</p>
+        <p>Art Director / Communication Material / Production</p>
+       <p style="text-align: right;">2023</p>
+      </div>
+
+
+<div class="w3-container w3-hide" id="drawer-34">
+  <!-- Detailed information and image for Project 1 -->
+  <div class="row">
+    <!-- First column with text -->
+    <div class="col-md-6" id="image-slider-container-34">
+
+<a href="http://aufetwas.com/">Visit Website</a>
+<br>
+<br>
+      <p>The Gathering ! is an annual 3-day electronic music festival organized by Honest Electronics set in Kampia, Tamassos. It is a Do-It-Together event with no sponsors, made by and for artists. <br><br>
+
+The Gathering 8 ! marks the 8th year since The Gathering ! began, back in July, 2016. It is the 8th rotation, and given the disruptions of the past years, it feels like we’ve come full circle again — we’re back somewhere we’ve been before, only it’s completely different this time — we’re different.<br><br>
+
+We’re going back to the lake this year, and going back to basics: a collective experience revolving around two-stages; one for night and one for day. When one stage is open, the other is closed. We’ll all stay together and we wont miss a show. Like a figure of eight, around and around we’ll go. 48 into 8 gives us eight 6-hour sessions, running from 7 to 1 and then 1 to 7; because 7 plus 1 takes us back to eight again.
+
+</p>
+    </div>
+
+    <!-- Second column with image and slider -->
+    <div class="col-md-6" id="image-slider-container-34">
+      <div id="image-slider-34">
+        <img class="slider-image" src="project-34-1.png" alt="Project 1 Image">
+        <img class="slider-image" src="project-34-2.png" alt="Project 2 Image">
+        <img class="slider-image" src="project-34-3.png" alt="Project 2 Image">
+
+
+
+        <!-- Add more images for the gallery here if needed -->
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Project 33 -->
+
+    <div class="w3-border-top w3-border-black w3-hover-border-orange">
+      <div class="project-details" onclick="toggleDrawer(33)">
+        <p>Floricienta Iuvenalis</p>
+        <p></p>
+        <p>Package Design/Branding</p>
+       <p style="text-align: right;">2023</p>
+      </div>
+
+
+<div class="w3-container w3-hide" id="drawer-33">
+  <!-- Detailed information and image for Project 1 -->
+  <div class="row">
+    <!-- First column with text -->
+    <div class="col-md-6" id="image-slider-container-33">
+
+<a href="http://aufetwas.com/">Visit Website</a>
+<br>
+<br>
+      <p>Floricienta Iuvenalis is a prominent Cypriot-based perfumery and beauty shop, owned and curated by the visionary entrepreneur Chrysa Gregoriou. This exquisite brand is on a dedicated mission to explore and revitalize the ancient perfumery practices of the island, delving deep into the rich historical heritage of Cyprus as a hub for perfumery.<br><br>
+
+With a profound passion for preserving the aromatic traditions of Cyprus, Floricienta Iuvenalis goes beyond the ordinary to capture the essence of time-honored scents. Drawing inspiration from the island's illustrious history, the brand meticulously researches ancient perfume-making techniques, using them as a foundation to craft modern and alluring fragrances.<br><br>
+
+A distinctive aspect of Floricienta Iuvenalis is its connection to the past, as it unearths fascinating insights into the oldest perfumery shop ever discovered on the island. This extraordinary discovery has become a pivotal influence on the brand's journey to reintroduce long-forgotten aromas, providing a unique olfactory experience that transports customers through the ages.<br><br>
+
+At Floricienta Iuvenalis, customers are not just patrons but time travelers, experiencing the captivating scents that once adorned the ancient Cypriot elite. Through their commitment to excellence and an unwavering dedication to craftsmanship, the perfumery continues to captivate fragrance enthusiasts, instilling a profound appreciation for the artistry and history of perfumery on the captivating island of Cyprus.
+
+</p>
+    </div>
+
+    <!-- Second column with image and slider -->
+
+    <div class="col-md-6" id="image-slider-container-33">
+      <div id="image-slider-33">
+        <img class="slider-image" src="project-33-1.JPG" alt="Project 1 Image">
+        <img class="slider-image" src="project-33-2.JPG" alt="Project 1 Image">
+        <img class="slider-image" src="project-33-3.jpeg" alt="Project 1 Image">
+        <img class="slider-image" src="project-33-4.jpeg" alt="Project 1 Image">
+
+        <!-- Add more images for the gallery here if needed -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <!-- Project 32 -->
+
+<div class="project-details w3-border-top w3-border-black w3-hover-border-yellow" onclick="toggleDrawer(32)">
+<p>SNS</p>
+<p></p>
+<p>Fashion Brand Identity</p>
+<p style="text-align: right;">2023</p>
+</div>
+
+ <!-- drawer-32 -->
+
+<div class="w3-container w3-hide" id="drawer-32">
+  <div class="row">
+   
+
+ <!-- text collumn -->
+
+    <div class="col-md-6" id="image-slider-container-32">
+
+      <p>Auf Etwas is a Berlin-based creative studio focusing on digital art and culture, where we push the boundaries of sonic conventions, foster inclusivity, drive social impact and provide a platform for diverse voices.<br><br>
+
+Established in 2011 in Athens, our journey began in the music industry, evolving into artist management, artist liaison, and stage management for high-end artists and venues. Over time, our expertise grew, leading us to venture into full-length films, film festivals, and fashion productions while collaborating with Berlinale, Cannes Film Festival, and Berlin Fashion Week.<br><br>
+
+Driven by a vision to revolutionize the creative industry, we aim to bridge diverse disciplines and create a platform for untold stories while ensuring the appropriate representation in front and behind the camera. Through launching our documentary-style video campaigns for MTV, we have started capturing authentic narratives that address current social taboos and forge profound connections with communities.
+<br><br>
+Led by Eva Mikelatou, an Athens-born, Berlin-based creative producer with a background in music, film, and psychology. Whether it's through sound, film, or other multimedia, Auf Etwas is dedicated to empowering underrepresented communities and redefining the way people experience culture by combining innovative and experimental approaches.</p>
+    </div>
+
+
+    <!-- image and slider -->
+
+    <div class="col-md-6" id="image-slider-container-32">
+      <div id="image-slider-32">
+        <img class="slider-image" src="project-34-1.png" alt="Project 1 Image">
+        <img class="slider-image" src="project-34-2.png" alt="Project 2 Image">
+        <img class="slider-image" src="project-34-3.png" alt="Project 2 Image">
+        <!-- Add more images for the gallery here if needed -->
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  </main>
+
+  <script>
+  function toggleDrawer(projectNumber) {
+    const drawer = document.getElementById(`drawer-${projectNumber}`);
+    if (drawer.classList.contains('w3-hide')) {
+      drawer.classList.remove('w3-hide');
+    } else {
+      drawer.classList.add('w3-hide');
+    }
+  }
+
+  function showSlide(index, sliderId) {
+    const sliderImages = document.querySelectorAll(`#${sliderId} .slider-image`);
+
+    // Hide all images
+    sliderImages.forEach((image, i) => {
+      if (i === index) {
+        image.style.opacity = "1"; // Show the image
+      } else {
+        image.style.opacity = "0"; // Hide the image
+      }
+    });
+  }
+
+  function nextSlide(sliderId) {
+    const sliderImages = document.querySelectorAll(`#${sliderId} .slider-image`);
+    currentSlide[sliderId] = (currentSlide[sliderId] + 1) % sliderImages.length;
+    showSlide(currentSlide[sliderId], sliderId);
+  }
+
+  function prevSlide(sliderId) {
+    const sliderImages = document.querySelectorAll(`#${sliderId} .slider-image`);
+    currentSlide[sliderId] = (currentSlide[sliderId] - 1 + sliderImages.length) % sliderImages.length;
+    showSlide(currentSlide[sliderId], sliderId);
+  }
+
+  let currentSlide = {
+    'image-slider-35': 0,
+    'image-slider-34': 0,
+    'image-slider-33': 0,
+    'image-slider-32': 0,
+    'image-slider-31': 0,
+    'image-slider-30': 0,
+    'image-slider-29': 0,
+    'image-slider-28': 0,
+    'image-slider-27': 0,
+    'image-slider-26': 0,
+    'image-slider-25': 0,
+    'image-slider-24': 0,
+    'image-slider-23': 0,
+    'image-slider-22': 0,
+    'image-slider-21': 0,
+    'image-slider-20': 0
+  };
+
+  function addClickListeners(sliderId) {
+    const sliderImages = document.querySelectorAll(`#${sliderId} .slider-image`);
+    sliderImages.forEach((image, i) => {
+      image.style.cursor = "pointer"; // Set the cursor to pointer to indicate it's clickable
+      image.addEventListener("click", () => nextSlide(sliderId)); // Add click event listener
+    });
+  }
+
+  // Set initial visibility for the first image for each slider and add click listeners
+  window.onload = () => {
+    showSlide(0, 'image-slider-35');
+    showSlide(0, 'image-slider-34');
+    showSlide(0, 'image-slider-33');
+    showSlide(0, 'image-slider-32');
+
+    addClickListeners('image-slider-35');
+    addClickListeners('image-slider-34');
+    addClickListeners('image-slider-33');
+    addClickListeners('image-slider-32');
+  };
+
+</script>
+
+
+
+
+
+
+
+  </script>
+
+</body>
+</html>
