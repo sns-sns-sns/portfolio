@@ -1,0 +1,58 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Animation</title>
+    <style>
+        /* Define the frame */
+        .frame {
+            max-height:300px;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Define the container for images */
+        .image-container {
+            white-space: nowrap;
+            animation: moveRight 15s linear infinite; /* Adjust the animation duration as needed */
+        }
+
+        /* Define the animation for moving images to the right */
+        @keyframes moveRight {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Define styles for individual images */
+        .image-container img {
+            max-height: 300px; /* Set the desired height */
+            width: auto;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Frame -->
+    <div class="frame">
+        <!-- Container for images -->
+        <div class="image-container" id="image-container">
+            <!-- Manually add image locations here -->
+            <img src="images/36/1.png" alt="Image 1">
+            <img src="image2.jpg" alt="Image 2">
+            <img src="image3.jpg" alt="Image 3">
+            <!-- Add more images as needed -->
+        </div>
+    </div>
+</body>
+</html>
+
