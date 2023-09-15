@@ -33,6 +33,35 @@ div.scroll-container img {
       
 
 
+      #color-changing-word {
+  animation: colorChange 1s infinite; /* Change '3s' to the duration you want */
+}
+
+
+.rotated-text {
+  transform: rotate(-45deg);
+  transform-origin: center; /* Rotate around the center of the element */
+}
+
+.rotated-text2 {
+  transform: rotate(45deg);
+  transform-origin: center; /* Rotate around the center of the element */
+}
+
+/* Create a CSS animation for the color change */
+@keyframes colorChange {
+  0% {
+    color: blue;
+  }
+  50% {
+    color: yellow;
+  }
+  100% {
+    color: blue;
+  }
+}
+
+
 /* CSS for the image slider */
 
 #drawer-37 {
@@ -346,7 +375,7 @@ div.scroll-container img {
 <div class="header w3-bar w3-left" >
 
 <div class="w3-half" style="margin-top: 10px; margin-left: 15px; margin-right: -15px;">
-<a href="https://sns-sns-sns.github.io/auf-etwas/about.html" style="width:50s%"><b>Studio Nikos Stephou</b></a><br><br>
+<a href="#" style="width:50s%"><b>Studio Nikos Stephou</b></a><br><br>
 
     </div>
 
@@ -357,8 +386,8 @@ div.scroll-container img {
 
     </div>
 <div style="position: absolute; right: 0; text-align:right; margin-top: 10px; margin-right: 15px;" class="menu-thing">
-<a href="https://sns-sns-sns.github.io/auf-etwas/about.html" style="width:50s%">About</a><br>
-<a href="https://sns-sns-sns.github.io/auf-etwas/about.html" style="width:50s%">Instagram</a><br>
+<a href="https://sns-sns-sns.github.io/portfolio/about.html" style="width:50s%">About</a><br>
+<a href="https://www.instagram.com/studionikosstephou/" style="width:50s%">Instagram</a><br>
 <a href="https://sns-sns-sns.github.io/auf-etwas/about.html" style="width:50s%">LinkedIn</a><br>
 <a href="https://sns-sns-sns.github.io/auf-etwas/about.html" style="width:50s%">Behance</a>
 
@@ -367,8 +396,16 @@ div.scroll-container img {
 </div>
 
 <div style="position: fixed; right: 0; bottom: 10px; text-align:right; margin-top: 10px; margin-right: 15px; background-color:yellow;" class="menu-thing">
-<a href="https://sns-sns-sns.github.io/auf-etwas/about.html" style="width:50s%">Hire Me !</a><br>
+<a href="mailto:nico.stephou@gmail.com" style="width:50s%">Hire Me !</a><br>
+</div>
 
+<div style="position: absolute; right: 0; top: 10%; text-align:right; margin-top: 10px; margin-right: 17px;" class="menu-thing">
+<p style="font-size:20px;" id="color-changing-word" class="rotated-text2" >&nearr;</p>
+</div>
+
+
+<div style="position: absolute; right: 60px; bottom:35px; text-align:right; margin-top: 10px; margin-right: 15px;" class="menu-thing">
+<p style="font-size:7px;" class="rotated-text" >Click!</p>
 </div>
 
 
@@ -411,7 +448,7 @@ div.scroll-container img {
 
 
 <div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(37)">
-<p><b>037</b> Auf Etwas</p>
+<p><b>037</b><u> Auf Etwas </u></p>
 <p>Eva Mikelatou</p>
 <p >Branding / Web Design & Development</p>
 <p style="text-align: right;">2023</p>
@@ -451,7 +488,7 @@ Established in 2011 in Athens, our journey began in the music industry, evolving
 
 
 <div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(36)">
-<p><b>036</b> The Gathering 8!</p>
+<p><b>036</b><u> The Gathering 8!</u></p>
 <p>Honest Electronics</p>
 <p >Branding / Art Direction / Production</p>
 <p style="text-align: right;">2023</p>
@@ -489,7 +526,7 @@ The Gathering 8 ! marks the 8th year since The Gathering ! began, back in July, 
 
 
 <div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(35)">
-<p><b>035</b> Perfumery</p>
+<p><b>035</b><u> Perfumery</u></p>
 <p>Floricienta Iuvenalis</p>
 <p>Branding / Label & Package Design</p>
 <p style="text-align: right;">2023</p>
@@ -526,8 +563,8 @@ With a profound passion for preserving the aromatic traditions of Cyprus, Floric
 <!-- Project 34 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(34)">
-<p><b>034</b> Summer Movie Marathon 2023</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(34)">
+<p><b>034</b><u> Summer Movie Marathon 2023</u></p>
 <p>Deputy Ministry of Culture</p>
 <p>Communication Material Design</p>
 <p style="text-align: right;">2023</p>
@@ -565,8 +602,8 @@ Under the night sky, spectators can embark on unique journeys into different tim
 <!-- Project 33 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(33)">
-<p><b>033</b> SNS Debut</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(33)">
+<p><b>033</b><u> SNS Debut</u></p>
 <p>SNS</p>
 <p >Branding / Art Direction</p>
 <p style="text-align: right;">2023</p>
@@ -607,8 +644,8 @@ Studio Nikos Stephou's fashion line is designed to be gender-neutral, breaking t
 <!-- Project 32 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(32)">
-<p><b>032</b> When The Ear Tells The Eye</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(32)">
+<p><b>032</b><u> When The Ear Tells The Eye</u></p>
 <p>LLC</p>
 <p>Poster Design</p>
 <p style="text-align: right;">2023</p>
@@ -646,8 +683,8 @@ Studio Nikos Stephou's fashion line is designed to be gender-neutral, breaking t
 <!-- Project 31 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(31)">
-<p><b>031</b> 222555</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(31)">
+<p><b>031</b><u> 222555</u></p>
 <p>Ichomagnetic Thoughts</p>
 <p >Identity / Poster Design</p>
 <p style="text-align: right;">2023</p>
@@ -690,8 +727,8 @@ Illustration / Tape Layout by Stelios Ilchuk</p>
 <!-- Project 29 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(29)">
-<p><b>029</b> Amanda</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(29)">
+<p><b>029</b><u> Amanda</u></p>
 <p>Olga Micińska / Maria Editions</p>
 <p>Book Design</p>
 <p style="text-align: right;">2022</p>
@@ -732,8 +769,8 @@ Publication of the first issue of Amanda is kindly supported by Mondriaan Fonds 
 <!-- Project 28 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(28)">
-<p><b>028</b> Craftland</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(28)">
+<p><b>028</b><u> Craftland</u></p>
 <p>Anassa Hotel / Cyprus Handicraft Services</p>
 <p >Branding / Communication Material</p>
 <p style="text-align: right;">2022</p>
@@ -771,8 +808,8 @@ Publication of the first issue of Amanda is kindly supported by Mondriaan Fonds 
 <!-- Project 27 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(27)">
-<p><b>027</b> The Gathering 7 !</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(27)">
+<p><b>027</b><u> The Gathering 7 !</u></p>
 <p>Honest Electronics</p>
 <p>Branding / Art Direction / Production</p>
 <p style="text-align: right;">2022</p>
@@ -808,8 +845,8 @@ With a total of 52 Artists, it is compiled by some of the best the Cypriot elect
 <!-- Project 26 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(26)">
-<p><b>026</b> Perk!</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(26)">
+<p><b>026</b><u> Perk!</u></p>
 <p>ARTSLab</p>
 <p >Exhibtion Curation / Workshop Co-Fascilitator </p>
 <p style="text-align: right;">2023</p>
@@ -860,8 +897,8 @@ Photos from Exhibition by Charis Charalampous</p>
 <!-- Project 25 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(25)">
-<p><b>025</b> REVIVAL</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(25)">
+<p><b>025</b><u> REVIVAL</u></p>
 <p>Subaerial</p>
 <p>Poster Design</p>
 <p style="text-align: right;">2022</p>
@@ -905,8 +942,8 @@ Jay Glass Dubs Live<br>
 <!-- Project 24 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(24)">
-<p><b>024</b> Anthograms </p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(24)">
+<p><b>024</b><u> Anthograms</u></p>
 <p>Mary Plant</p>
 <p >Book Design</p>
 <p style="text-align: right;">2023</p>
@@ -945,8 +982,8 @@ Jay Glass Dubs Live<br>
 <!-- Project 23 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(23)">
-<p><b>023</b> The Broken Pitcher</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(23)">
+<p><b>023</b><u> The Broken Pitcher</u></p>
 <p>GzZK Leipzig / Thkio Ppalies / Beirut Art Center / Galerie für Zeitgenössische Kunst / Lenbachhaus</p>
 <p>Movie Branding / Publication Design / Poster Design / Movie Titles</p>
 <p style="text-align: right;">2023</p>
@@ -991,8 +1028,8 @@ The Broken Pitcher is conceived and organised by Natascha Sadr Haghighian, Marin
 <!-- Project 22 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(22)">
-<p><b>022</b> Kypriaka Spirta Afroditis (KSA)</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(22)">
+<p><b>022</b><u> Kypriaka Spirta Afroditis (KSA)</u></p>
 <p>CEL / Cyprus University of Technology</p>
 <p>Book Design</p>
 <p style="text-align: right;">2022</p>
@@ -1029,8 +1066,8 @@ CEL are Christos Kyriakidis, Elena Parpa and Leontios Toumbouris. The group was 
 <!-- Project 21 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(21)">
-<p><b>021</b> The River Speaks</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(21)">
+<p><b>021</b><u> The River Speaks</u></p>
 <p>Harokopio University of Athens</p>
 <p >UI & UX Design / Branding</p>
 <p style="text-align: right;">Ongoing</p>
@@ -1070,8 +1107,8 @@ The mobile application A River Speaks is part of a two-year research project fun
 <!-- Project 19 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(19)">
-<p><b>019</b> Blight</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(19)">
+<p><b>019</b><u> Blight</u></p>
 <p>ARTSLab</p>
 <p>Exhibition Curator / Poster Design </p>
 <p style="text-align: right;">2023</p>
@@ -1134,8 +1171,8 @@ Photos from Exhibition by Charis Charalampous</p>
 <!-- Project 17 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(17)">
-<p><b>017</b> WADS</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(17)">
+<p><b>017</b><u> WADS</u></p>
 <p>CYENS - Centre of Excellence</p>
 <p>Branding / Communication Design</p>
 <p style="text-align: right;">2023</p>
@@ -1189,8 +1226,8 @@ world-building.
 <!-- Project 16 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(16)">
-<p><b>016</b> Eartheater</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(16)">
+<p><b>016</b><u> Eartheater</u></p>
 <p>PAN Records / Stavros Niarchos Foundation</p>
 <p>Artwork / Communication Material</p>
 <p style="text-align: right;">2023</p>
@@ -1231,8 +1268,8 @@ Poster Design: Studio Nikos Stephou (Artwork) & NMR.CC / Korina Gallika (Layout 
 <!-- Project 15 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(15)">
-<p><b>015</b> Sickle & Code / Phygital</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(15)">
+<p><b>015</b><u> Sickle & Code / Phygital</u></p>
 <p>University of Nicosia Research Foundation / Municipality of Lakatamia / Thkio Ppalies<</p>
 <p>Communication Design / Branding / Publication Design / Visual Research</p>
 <p style="text-align: right;">2019</p>
@@ -1272,8 +1309,8 @@ Sickle & Code is organised by the University of Nicosia Research Foundation as p
 <!-- Project 14 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(14)">
-<p><b>014</b> Minerals</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(14)">
+<p><b>014</b><u> Minerals</u></p>
 <p>mjut Leipzig</p>
 <p>Branding / Poster Design</p>
 <p style="text-align: right;">2023</p>
@@ -1312,8 +1349,8 @@ Sickle & Code is organised by the University of Nicosia Research Foundation as p
 <!-- Project 13 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(13)">
-<p><b>013</b> The Ice Age</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(13)">
+<p><b>013</b><u> The Ice Age</u></p>
 <p>Theo-Mass Lexileictous / Audi Experience</p>
 <p >Communication Design / Typography Design</p>
 <p style="text-align: right;">2019</p>
@@ -1349,8 +1386,8 @@ Theo-Mass Lexileictous publishes his own zine under the title Theo-Mass Times, s
 <!-- Project 12 BEGINNING -->
 
 
-<div class="project-details w3-border-top w3-border-grey w3-hover-border-black" onclick="toggleDrawer(12)">
-<p><b>012</b> Genesis Breyer P-Orridge (Last Interview)</p>
+<div class="project-details w3-border-top w3-border-black w3-hover-border-blue" onclick="toggleDrawer(12)">
+<p><b>012</b><u> Genesis Breyer P-Orridge (Last Interview)</u></p>
 <p>KING KONG London</p>
 <p>Layout Design / Typography Design</p>
 <p style="text-align: right;">2019</p>
@@ -1685,7 +1722,11 @@ function toggleDrawer(projectNumber) {
 
 
 
+const word = document.getElementById('color-changing-word');
 
+word.addEventListener('click', () => {
+  word.classList.toggle('animate-color-change');
+});
 
 
 </script>
