@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Manrope:wght@200..800&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Noto Sans', sans-serif;
+            background-color: white;
+            color: black;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            max-width: 1200px; /* Maximum width of 1200px */
+            margin: 0 auto; /* Centers the container horizontally */
+            padding: 20px; /* Optional: adds padding around the content */
+            box-sizing: border-box; /* Ensures padding is included in the width */
+        }
+        .project {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            padding: 0px;
+        }
+.left-column {
+    flex: 0 0 40%; /* This sets the left column to take up 30% of the container's width */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.right-column {
+    flex: 0 0 60%; /* This sets the right column to take up 70% of the container's width */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+        .project-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 10px;
+
+        }
+        .project-description {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+.project-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Default: two equal-width columns */
+    gap: 10px; /* Add space between images */
+}
+
+.project-images img:first-child {
+    grid-column: span 2; /* Make the first image span both columns */
+    width: 100%; /* Full width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+
+
+        .project-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        hr {
+            border: 0.5px solid #000;
+            margin: 0;
+            border-color: grey;
+        }
+
+        ul {
+    list-style-type: none; /* Removes the bullets */
+    padding-left: 0; /* Optional: Removes any left padding */
+}
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .lightbox .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .project {
+                flex-direction: column; /* Stack the text and images */
+            }
+
+            .left-column {
+                order: 1; /* Ensure text comes first */
+            }
+
+            .right-column {
+                order: 2; /* Ensure images come after text */
+            }
+
+            .project-image {
+                width: 100%; /* Make images take the full width of the screen */
+                height: auto; /* Maintain aspect ratio */
+            }
+        }
+
+
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    color: black;
+ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    opacity: 0; /* Initially hidden */
+    visibility: hidden; /* Ensures the element doesn't take up space */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+    </style>
+</head>
+<body>
+
+
+
+    <div class="container">
+
+      <button id="back-to-top" title="Go to top">↑</button>
+
+        <!-- Cover Letter -->
+        <div class="project">
+            <div class="left-column">
+
+                <div class="project-title">Nikos Stephou<br>nico.stephou@gmail.com<br>+35796404991</div>
+                <a href="www.sns-sns.com">Website</a>
+                <br><br>
+                  <img src="ns.jpg" class="project-image">
+
+
+<br><br>
+            </div>
+            <div class="right-column">
+
+                              <div class="project-title">Cover Letter</div>
+Dear Ákos Zeleny,
+<br><br>
+I’m thrilled to apply for the Multimedia Designer position at morfi. With nearly a decade of experience as a freelancer, I bring a unique combination of adaptability, creativity, and a proven track record in graphic design, animation, and illustration.
+<br><br>
+As a classically trained illustrator with expertise in Adobe Creative Cloud and Blender, I’ve built a diverse portfolio that spans graphic design, motion graphics, and animation. I’ve created multimedia assets for various platforms, curated art exhibitions, and developed explainer-style animations. My ability to storyboard complex ideas and translate them into engaging visuals aligns seamlessly with your needs for eLearning development.
+<br><br>
+Freelancing for the past 10 years has honed my resilience, time management, and ability to learn new tools quickly. Recently, I’ve delved into AI technologies, reflecting my commitment to staying at the forefront of creative trends. I’m excited to bring this adaptability to your team, where I can create innovative content, learn Articulate Storyline 360, and contribute to building engaging learning experiences.
+<br><br>
+I’d welcome the opportunity to bring my creative expertise and passion for design to morfi. Thank you for considering my application. I look forward to the chance to discuss how I can contribute.
+<br><br>
+Best regards,<br>
+Nikos Stephou
+<br><br>
+
+
+                
+
+<br><br>
+
+
+
+
+            </div>
+
+        </div>
+
+
+        <hr>
+        <!-- Branding Section -->
+        <div id="branding" class="project">
+            <div class="left-column">
+
+                  <div class="project-title">Selected Portfolio Content</div>
+                <ul>
+                    <li><a href="#branding">1 - Visual Identity</a></li>
+                    <li><a href="#motion">2 - Animation / Motion Graphics</a></li>
+                    <li><a href="#3d">3 - 3D Works</a></li>
+                    <li><a href="#uxui">4 - UX/UI / Web Dev</a></li>
+                     <li><a href="#pub">5 - Publications</a></li>
+
+                </ul>
+</div>
+<div class="right-column">
+
+<div class="project-title">Fluent in</div><br>
+Adobe Photoshop <br>
+Adobe Illustrator <br>
+Adobe InDesign <br>
+Adobe After Effects <br>
+Blender <br>
+Davinci Resolve <br>
+Ableton Live <br>
+HTML/CSS <br>
+Figma <br>
+
+<br><br>
+            </div>
+        </div>
+
+
+
+        <hr>
+        <!-- Branding Section -->
+        <div id="branding" class="project">
+            <div class="left-column">
+                <div class="project-title">1 - Visual Identity</div>
+            </div>
+        </div>
+
+
+        <br><br>
+
+
+
+        <br><br>
+        <hr>
+
+
+
+
+
+    <!-- Project 3 -->
+        <div id="git" class="project">
+            <div class="left-column">
+                <div class="project-title">Cyprus Museum
+                <br>WE MET – LOVE, DEATH AND META</div>
+                <div class="project-description">Branding<br>Posters<br>Exhibition Graphics<br> Typography<br>Publication Design</div><br><br>
+                
+                   <div class="project-description">For the Cyprus Museum's groundbreaking art installation WE MET – LOVE, DEATH AND META, I worked on creating a cohesive visual identity that captures the profound and immersive nature of the exhibit. By designing posters, exhibition graphics, banners, and publications, I ensured that every element resonated with the themes of love, decay, and rebirth within a hybrid virtual and physical universe. The typography and branding were crafted to seamlessly blend contemporary aesthetics with the timeless allure of the antiquities on display.
+<br><br>
+My creative approach was inspired by the exhibit's central themes and the artistic language of Michalis Charalambous. Drawing on his masterful techniques, I transformed concepts like clay as skin and the transition from physical to digital into visual elements that evoke emotional depth. Each graphic, color, and texture invites the audience to embark on a reflective journey through the meta-realm, exploring the complexities of human experience in a rapidly shifting reality.
+
+</div>
+            </div>
+            <div class="right-column">
+                <div class="project-images">
+                    <img src="images/43/1.png" class="project-image" onclick="openLightbox(this.src)">
+                    <img src="images/43/2.png" class="project-image" onclick="openLightbox(this.src)">
+                    <img src="images/43/3.jpg" class="project-image" onclick="openLightbox(this.src)">
+                </div>
+            </div>
+        </div>
+         <br><br>
+ <hr>
+
+        <!-- Project 2 -->
+        <div id="python" class="project">
+            <div class="left-column">
+                <div class="project-title">Floricienta Iuvenalis</div>
+                <div class="project-description">Branding<br>Packaging Design<br>Advertising Posterss<br>3D Renders</div><br><br>
+
+                <div class="project-description">Floricienta Iuvenalis, under the leadership of Chrysa Gregoriou, is a beacon of Cyprus’s aromatic heritage. Collaborating closely with this visionary entrepreneur, I contributed to shaping the brand’s unique and captivating image, ensuring it resonated with the mystery and allure that defines the Floricienta identity. Together, we created a visual narrative that reflects the rich history and tradition of Cypriot perfumery, weaving modern aesthetics with a timeless sense of elegance.
+<br><br>
+My work included designing labels for over 50 products, crafting cohesive branding, and creating packaging that embodies the brand's sophisticated essence. Additionally, I developed advertising posters that communicate the enchanting story of Floricienta Iuvenalis to a broader audience. This collaborative effort resulted in a brand presentation as compelling and unforgettable as the fragrances themselves.</div>
+            </div>
+            <div class="right-column">
+                <div class="project-images">
+                     <img src="images/35/8.png" class="project-image" onclick="openLightbox(this.src)">
+                   
+                </div>
+            </div>
+        </div>
+         <br><br>
+        <hr>
+
+
+
+
+      <!-- Project 4 -->
+        <div id="git" class="project">
+            <div class="left-column">
+                <div class="project-title">Broken Pitcher Movie & Exhibitions</div>
+                <div class="project-description">Visual Identity<br>Posters<br>Communication Materials<br>Movie Titles</div>
+                <br><br>
+                                <div class="project-description">For The Broken Pitcher, a compelling project that explores the impact of foreclosure in Cyprus, I created a visual identity that encapsulated the emotional and social significance of the narrative. By designing posters, publications, and various communication materials, I ensured the visual representation aligned with the project's critical examination of debt, colonial history, and its impact on individuals. The branding reflected the intensity and complexity of the subject matter, making it accessible and thought-provoking to diverse audiences.
+<br><br>
+Drawing on the project's deep exploration of personal and societal perspectives, my design approach was rooted in conveying both the personal tragedy and broader socio-political implications of the foreclosure crisis. The visual identity, with its stark and evocative elements, served as a bridge between the filmed reenactment and the broader cultural discourse, inviting reflection on the lasting consequences of Cyprus' economic history.</div>
+            </div>
+            <div class="right-column">
+<div class="project-images">
+  <img src="images/23/7.png" class="project-image" onclick="openLightbox(this.src)">
+
+  <img src="images/23/5.jpeg" class="project-image" onclick="openLightbox(this.src)">
+
+<img src="images/23/2.jpeg" class="project-image" onclick="openLightbox(this.src)">
+
+                </div>
+            </div>
+        </div>
+         <br><br>
+ <hr>
+
+    <!-- Project 4 -->
+        <div id="git" class="project">
+            <div class="left-column">
+                <div class="project-title">SpineSun<br>by Jacob Jonas</div>
+                <div class="project-description">Logo Design<br>Visual Research<br></div>
+                <br><br>
+                                <div class="project-description">Jacob Jonas, the visionary behind Jacob Jonas The Company, is celebrated for his collaborations with major names like TED, The Wall Street Journal, and The Getty Museum. Known for his groundbreaking work at the intersection of dance, art, and community engagement, Jacob’s latest venture, SpineSun, required branding that captured his innovative spirit and forward-thinking ethos.
+<br><br>
+For SpineSun, I conducted extensive visual research to align with Jacob’s distinct aesthetic. The resulting logo reflects both the dynamism and sophistication of the brand, embodying his vision with a modern yet timeless design. Every detail was meticulously crafted to ensure the branding stands as a true representation of his artistry and the Sunspine identity.
+</div>
+            </div>
+            <div class="right-column">
+<div class="project-images">
+  <img src="images/45/1.png" class="project-image" onclick="openLightbox(this.src)">
+
+  <img src="images/45/2.png" class="project-image" onclick="openLightbox(this.src)">
+
+<img src="images/45/3.png" class="project-image" onclick="openLightbox(this.src)">
+
+                </div>
+            </div>
+        </div>
+         <br><br>
+ <hr>
+
+
+
+
+       <!-- Animation Section -->
+        <div id="motion" class="project">
+            <div class="left-column">
+                <div class="project-title">2 - Animation / Motion Graphics </div>
+            </div>
+        </div>
+         <br><br>
+        <hr>
+
+        <!-- Project 1 -->
+<div id="react" class="project">
+    <div class="left-column">
+        <div class="project-title">Origins<br>by Markos Kay</div>
+        <div class="project-description">After Effects<br>Animation Composition</div>
+        <br><br>
+        <div class="project-description"> Markos Kay, a trailblazing digital artist known for blending science and art, directed Origins, an awe-inspiring animation projection showcased at Kunstkraftwerk Leipzig. 
+<br><br>
+For Origins, I animated the intricate creatures designed by Martin Salfity, bringing their forms and movements to life. Under Markos's direction, I ensured every animation captured the depth and vitality essential to the project's narrative. My work contributed to creating a seamless and immersive experience, aligning with the artistic vision of Origins.</div>
+    </div>
+    <div class="right-column">
+        <div class="project-images">
+
+
+<video width="100%" height="auto" controls autoplay muted>
+  <source src="images/44/origins mov.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<video width="100%" height="auto" controls autoplay muted>
+  <source src="images/44/origins mov2.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+        </div>
+    </div>
+</div>
+ <br><br>
+        <hr>
+
+        <!-- Project 2 -->
+        <div id="python" class="project">
+            <div class="left-column">
+                <div class="project-title">Honest Electronics</div>
+                <div class="project-description">Animation<br>Social Media Design<br>Event Graphics</div><br><br>
+                <div class="project-description">Honest Electronics is a vibrant collective and independent record label based in Cyprus, dedicated to promoting electronic music and fostering a collaborative community among local artists. They embrace a "Do—It—Together" ethos, activating the local music scene by organizing events and supporting musicians. Known for their diverse electronic music releases, Honest Electronics continues to play a key role in shaping the Cypriot electronic music landscape.<br><br>
+
+As a multimedia designer for Honest Electronics, I was responsible for crafting visual content for press coverage, events, and social media. My work included designing dynamic graphics, animations, and multimedia elements that captured the essence of their brand and resonated with their community. Additionally, I contributed to the overall visual identity of the label, helping to amplify their presence in the digital space.</div>
+            </div>
+            <div class="right-column">
+                <div class="project-images">
+
+<video width="100%" height="auto" controls autoplay muted>
+  <source src="images/42/vid 4.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<video width="100%" height="auto" controls autoplay muted>
+  <source src="images/42/vid 3.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<video width="100%" height="auto" controls autoplay muted>
+  <source src="images/42/vid 2.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<video width="100%" height="auto" controls autoplay muted>
+  <source src="images/42/vid 1.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+                </div>
+            </div>
+        </div>
+         <br><br>
+        <hr>
+
+
+
+ <!-- 3D Section -->
+        <div id="3d" class="project">
+            <div class="left-column">
+                <div class="project-title">3 - 3D Works </div>
+            </div>
+        </div>
+         <br><br>
+        <hr>
+
+        <!-- Project 1 -->
+<div id="react" class="project">
+    <div class="left-column">
+        <div class="project-title">Biomolecules<br>for American Heart Assosiation</div>
+        <div class="project-description">3D Modelling<br>3D Rendering<br>Infographics<br>Nutrition Science</div><br><br>
+        <div class="project-description">The Periodic Table of Food Initiative (PTFI) is an innovative project by the American Heart Assosiation that visually organizes the nutritional components of food in a periodic table format. This initiative aims to help people understand the science behind what they eat and promote better nutrition for healthier lifestyles.
+<br><br>
+For PTFI, I developed 3D scientific illustrations of key biomolecules such as lipids, proteins, carbohydrates, and minerals found in various foods. These detailed visuals were integrated into their interactive periodic table, making complex nutritional science accessible and engaging for the public.
+
+Key words: interactive design, nutrition science, 3D illustrations.</div>
+    </div>
+    <div class="right-column">
+        <div class="project-images">
+
+            <img src="images/39/bio-1.png" class="project-image" onclick="openLightbox(this.src)">
+            <img src="images/39/bio-2.png" class="project-image" onclick="openLightbox(this.src)">
+
+            <img src="images/39/bio-3.png" class="project-image" onclick="openLightbox(this.src)">
+            <img src="images/39/bio-4.png" class="project-image" onclick="openLightbox(this.src)">
+                        <img src="images/39/bio-5.png" class="project-image" onclick="openLightbox(this.src)">
+        </div>
+    </div>
+</div>
+ <br><br>
+   <hr>
+ 
+
+
+
+
+<!-- UX/UI Section -->
+        <div id="uxui" class="project">
+            <div class="left-column">
+                <div class="project-title">4 - UX/UI - Web Dev </div>
+            </div>
+        </div>
+         <br><br>
+        <hr>
+
+
+
+  <!-- Project 1 -->
+<div id="react" class="project">
+    <div class="left-column">
+        <div class="project-title">Auf Etwas</div>
+        <div class="project-description">Branding, Website Design, Web Development</div>
+        <div class="project-description">WHAT I DID: Auf Etwas is a Berlin-based creative studio focusing on digital art and culture...</div>
+        <br><br>
+<div class="project-description">Website Link</div>
+
+
+        <img src="images/37/1.png" class="project-image" onclick="openLightbox(this.src)">
+    </div>
+    <div class="right-column">
+        <div class="project-images">
+            <img src="images/37/4.gif" class="project-image" onclick="openLightbox(this.src)">
+
+            <img src="images/37/2.png" class="project-image" onclick="openLightbox(this.src)">
+            <img src="images/37/3.png" class="project-image" onclick="openLightbox(this.src)">
+        </div>
+    </div>
+</div>
+ <br><br>
+       <hr>
+        <!-- Project 1 -->
+<div id="react" class="project">
+    <div class="left-column">
+        <div class="project-title">The River Speaks</div>
+        <div class="project-description">Branding, Website Design, Web Development</div>
+        <div class="project-description">WHAT I DID: Auf Etwas is a Berlin-based creative studio focusing on digital art and culture...</div>
+    </div>
+    <div class="right-column">
+        <div class="project-images">
+            <img src="images/21/1.png" class="project-image" onclick="openLightbox(this.src)">
+
+        </div>
+    </div>
+</div>
+
+ 
+
+
+
+
+ <br><br>
+        <hr>
+
+
+
+
+
+    
+
+
+        <hr>
+
+        <!-- Publication Section -->
+        <div id="pub" class="project">
+            <div class="left-column">
+                <div class="project-title">5 - Publications</div>
+            </div>
+        </div>
+         <br><br>
+        <hr>
+
+        <!-- Project 1 -->
+<div id="react" class="project">
+    <div class="left-column">
+        <div class="project-title">King Kong Magazine</div>
+        <div class="project-description">Branding, Website Design, Web Development</div>
+        <div class="project-description">WHAT I DID: Auf Etwas is a Berlin-based creative studio focusing on digital art and culture...</div>
+    </div>
+    <div class="right-column">
+        <div class="project-images">
+            <img src="images/12/1.png" class="project-image" onclick="openLightbox(this.src)">
+            <img src="images/12/2.png" class="project-image" onclick="openLightbox(this.src)">
+        </div>
+    </div>
+</div>
+ <br><br>
+        <hr>
+
+        <!-- Project 2 -->
+        <div id="python" class="project">
+            <div class="left-column">
+                <div class="project-title">Amanda</div>
+                <div class="project-description">Branding, Website Design, Web Development</div>
+                <div class="project-description">Floricienta Iuvenalis is a prominent Cypriot-based perfumery...</div>
+            </div>
+            <div class="right-column">
+                <div class="project-images">
+                    <img src="images/29/1.png" class="project-image" onclick="openLightbox(this.src)">
+                    <img src="images/29/2.jpg" class="project-image" onclick="openLightbox(this.src)">
+                    <img src="images/29/3.jpg" class="project-image" onclick="openLightbox(this.src)">
+                </div>
+            </div>
+        </div>
+         <br><br>
+        <hr>
+
+
+
+
+       <!-- Container End -->    
+    </div>
+
+
+
+
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close" onclick="event.stopPropagation(); closeLightbox();">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+
+        // Get the button
+        const backToTopButton = document.getElementById('back-to-top');
+
+        // Show the button when the user scrolls down
+        window.onscroll = function() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        };
+
+        // Scroll to the top when the button is clicked
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+
+
+        // Open the lightbox
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = src;
+            lightbox.style.display = 'flex';
+        }
+
+        // Close the lightbox
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
