@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TECHNO SIGNAL</title>
+
+<style>
+body {
+    margin: 0;
+    background: #080a1c;
+    font-family: monospace;
+    overflow: hidden;
+}
+
+#terminal {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 1.2em;
+    white-space: pre;
+    color: #0b0e29;
+    text-shadow: 0 0 5px #0b0e29, 0 0 10px #3aa8ff, 0 0 20px #3aa8ff;
+}
+
+.line { display: block; }
+
+.white {
+    color: #ffffff;
+    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff;
+}
+
+.button-container {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.button-container button {
+    padding: 12px 25px;
+    margin: 0 5px;
+    background: #3aa8ff;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    letter-spacing: 2px;
+}
+</style>
+</head>
+<body>
+
+<canvas id="glowCanvas"></canvas>
+<div id="terminal"></div>
+
+<div class="button-container">
+    <button onclick="startAudio()">PLAY</button>
+    <button onclick="pauseAudio()">PAUSE</button>
+    <button onclick="stopAudio()">STOP</button>
+</div>
+
+<!-- Hidden canvas for procedural blocks -->
+<canvas id="procCanvas" width="400" height="400" style="display:none;"></canvas>
+
+<script>
+/* ================= AUDIO SETUP ================= */
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const analyser = audioCtx.createAnalyser();
+analyser.fftSize = 256;
+const dataArray = new Uint8Array(analyser.frequencyBinCount);
+let bufferSource = null;
+let audioBuffer = null;
+
+// Load audio file
+async function loadAudio(url) {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+}
+loadAudio('nightime.mp3');
+
+function playBuffer() {
+    if (!audioBuffer) return;
+    stopBuffer();
+    bufferSource = audioCtx.createBufferSource();
+    bufferSource.buffer = audioBuffer;
+    bufferSource.loop = true;
+    bufferSource.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    bufferSource.start();
+}
+
+function stopBuffer() {
+    if (bufferSource) {
+        bufferSource.stop();
+        bufferSource.disconnect();
+        bufferSource = null;
+    }
+}
+
+function getAverageVolume() {
+    analyser.getByteFrequencyData(dataArray);
+    let sum = 0;
+    for(let i=0;i<dataArray.length;i++) sum += dataArray[i];
+    return sum / dataArray.length;
+}
+
+function startAudio() {
+    if (audioCtx.state === "suspended") audioCtx.resume().then(playBuffer);
+    else playBuffer();
+}
+
+function pauseAudio() {
+    if (bufferSource) bufferSource.stop();
+}
+
+function stopAudio() {
+    stopBuffer();
+}
+
+/* ================= MATRIX GLOW BACKGROUND ================= */
+const canvas = document.getElementById('glowCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const glowGlyphs = "アァカサタナハマヤャラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$%&@#";
+const glowFontSize = 18;
+const glowColumns = canvas.width / glowFontSize;
+const glowDrops = [];
+for (let x = 0; x < glowColumns; x++) glowDrops[x] = Math.random() * canvas.height;
+
+function drawGlow() {
+    ctx.fillStyle = "rgba(8,10,28,0.08)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#3aa8ff";
+    ctx.font = glowFontSize + "px monospace";
+    for(let i=0;i<glowDrops.length;i++){
+        const char = glowGlyphs.charAt(Math.floor(Math.random()*glowGlyphs.length));
+        ctx.fillText(char, i*glowFontSize, glowDrops[i]);
+        glowDrops[i] += glowFontSize;
+        if(glowDrops[i] > canvas.height && Math.random() > 0.975) glowDrops[i] = 0;
+    }
+}
+setInterval(drawGlow, 50);
+
+/* ================= TERMINAL ================= */
+const terminal = document.getElementById("terminal");
+const glyphs = "アァカサタナハマヤャラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$%&@#";
+const blockShapes = ["─","│","┌","┐","└","┘","◯","●","○"];
+const maxLines = Math.floor(window.innerHeight / 19);
+let lines = [];
+let lineCount = 0;
+
+/* ASCII Art */
+const asciiArtList = [
+`   (\\_._/)   
+   ( o o )   
+   (  -  )   
+  o("===")o  
+   /     \\  
+  (       ) 
+  o       o 
+  (       ) 
+   \\     /  
+    "==="   
+`,
+`   _      
+  /_\\     
+ (o o)    
+  \\_/     
+  /|\\     
+  / \\     
+`,
+`   ^__^    
+   (oo)\\_______  
+   (__)\\       )\\/\\  
+       ||----w |   
+       ||     ||   
+`
+];
+
+/* NORMAL LINE */
+function generateNormalLine(){
+    let lineHTML = "";
+    const width = Math.floor(window.innerWidth/10);
+    for(let i=0;i<width;i++){
+        const char = glyphs.charAt(Math.floor(Math.random()*glyphs.length));
+        lineHTML += (Math.random()<0.01) ? `<span class="white">${char}</span>` : char;
+    }
+    return `<div class="line">${lineHTML}</div>`;
+}
+
+/* MINI BLOCK */
+function generateBlock(){
+    const blockSize = 20;
+    let blockHTML = "";
+    for(let y=0;y<blockSize;y++){
+        let line = "";
+        for(let x=0;x<blockSize;x++){
+            line += (Math.random()<0.4) ? `<span class="white">${blockShapes[Math.floor(Math.random()*blockShapes.length)]}</span>` : " ";
+        }
+        blockHTML += `<div class="line">${line}</div>`;
+    }
+    return blockHTML;
+}
+
+/* ASCII ART BLOCK */
+function generateASCIIArt(){
+    const art = asciiArtList[Math.floor(Math.random()*asciiArtList.length)];
+    return art.split('\n').map(l=>`<div class="line"><span class="white">${l}</span></div>`).join('');
+}
+
+/* PROCEDURAL VISUAL BLOCK */
+const procCanvas = document.getElementById('procCanvas');
+const procCtx = procCanvas.getContext('2d');
+
+function drawProceduralBlock(){
+    const width = procCanvas.width;
+    const height = procCanvas.height;
+    procCtx.fillStyle = '#080a1c';
+    procCtx.fillRect(0,0,width,height);
+
+    procCtx.shadowBlur = 8;
+    procCtx.shadowColor = "#3aa8ff";
+
+    const avg = getAverageVolume();
+    const linesCount = 30 + Math.floor(avg/5);
+    const circlesCount = 20 + Math.floor(avg/8);
+    const squaresCount = 10 + Math.floor(avg/10);
+
+    for(let i=0;i<linesCount;i++){
+        procCtx.strokeStyle = `hsl(${Math.random()*360},80%,60%)`;
+        procCtx.beginPath();
+        procCtx.moveTo(Math.random()*width, Math.random()*height);
+        procCtx.lineTo(Math.random()*width, Math.random()*height);
+        procCtx.stroke();
+    }
+    for(let i=0;i<circlesCount;i++){
+        procCtx.fillStyle = `hsl(${Math.random()*360},80%,60%)`;
+        procCtx.beginPath();
+        procCtx.arc(Math.random()*width, Math.random()*height, Math.random()*15,0,Math.PI*2);
+        procCtx.fill();
+    }
+    for(let i=0;i<squaresCount;i++){
+        procCtx.fillStyle = `hsl(${Math.random()*360},80%,60%)`;
+        const size = Math.random()*20;
+        procCtx.fillRect(Math.random()*(width-size), Math.random()*(height-size), size, size);
+    }
+
+    const img = new Image();
+    img.src = procCanvas.toDataURL();
+    img.style.width = "100%";
+    img.style.maxHeight = "400px";
+    return img;
+}
+
+/* PUSH LINES */
+function pushLine(){
+    lineCount++;
+
+    if(lineCount % 500 === 0){
+        const img = drawProceduralBlock();
+        const div = document.createElement('div');
+        div.className = 'line';
+        div.appendChild(img);
+        lines.push(div.outerHTML);
+    } else if(lineCount % 200 === 0){
+        const artBlock = generateASCIIArt();
+        artBlock.split('</div>').filter(Boolean).map(l=>l+'</div>').forEach(l=>lines.push(l));
+    } else if(lineCount % 100 === 0){
+        const block = generateBlock();
+        block.split('</div>').filter(Boolean).map(l=>l+'</div>').forEach(l=>lines.push(l));
+    } else {
+        lines.push(generateNormalLine());
+    }
+
+    if(lines.length > maxLines) lines.splice(0, lines.length - maxLines);
+    terminal.innerHTML = lines.join('');
+}
+
+setInterval(pushLine, 100);
+</script>
+
+</body>
+</html>
