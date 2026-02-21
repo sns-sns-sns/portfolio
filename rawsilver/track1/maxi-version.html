@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TECHNO SIGNAL</title>
+
+<style>
+  :root{
+    --bg:#080a1c;
+    --ink:#0b0e29;
+    --glow:#3aa8ff;
+    --white:#ffffff;
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    font-family:monospace;
+    overflow:hidden;
+  }
+
+  #bgCanvas{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    display:block;
+  }
+
+  #terminal{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    padding:20px;
+    box-sizing:border-box;
+    font-size:16px;
+    line-height:1.2em;
+    white-space:pre;
+    color:var(--ink);
+    text-shadow:0 0 5px var(--ink), 0 0 10px var(--glow), 0 0 20px var(--glow);
+    pointer-events:none;
+  }
+  .line{ display:block; }
+
+  .white{
+    color:var(--white);
+    text-shadow:0 0 5px var(--white), 0 0 10px var(--white);
+  }
+
+  .panel-wrap{ display:flex; justify-content:center; }
+  .panel{
+    width:240px; height:240px;
+    border:1px solid rgba(58,168,255,0.35);
+    box-shadow:0 0 10px rgba(58,168,255,0.25);
+    border-radius:6px;
+    overflow:hidden;
+    background:rgba(8,10,28,0.75);
+  }
+  .panel img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  #audioBtn{
+    position:fixed;
+    bottom:38px;
+    left:50%;
+    transform:translateX(-50%);
+    width:56px;
+    height:56px;
+    border:none;
+    border-radius:999px;
+    background:rgba(58,168,255,0.18);
+    box-shadow:0 0 14px rgba(58,168,255,0.35);
+    cursor:pointer;
+    z-index:10;
+    display:grid;
+    place-items:center;
+    color:var(--glow);
+    font-size:18px;
+    user-select:none;
+    backdrop-filter: blur(4px);
+  }
+  #audioBtn:hover{ background:rgba(58,168,255,0.26); }
+</style>
+</head>
+
+<body>
+  <canvas id="bgCanvas"></canvas>
+  <div id="terminal"></div>
+
+  <!-- Simple audio element -->
+  <audio id="player" preload="auto" loop>
+    <source src="nightime.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button id="audioBtn" aria-label="Play / Pause">▶</button>
+
+  <canvas id="procCanvas" width="240" height="240" style="display:none;"></canvas>
+
+<script>
+/* =========================================================
+   AUDIO + ANALYSER (wired once, only on first user click)
+   ========================================================= */
+const audioEl = document.getElementById("player");
+const audioBtn = document.getElementById("audioBtn");
+
+const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContextClass();
+
+let analyser = null;
+let freq = null;
+let mediaSource = null;
+let wired = false;
+
+function wireAudioGraphOnce(){
+  if (wired) return;
+
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 2048;
+  freq = new Uint8Array(analyser.frequencyBinCount);
+
+  // IMPORTANT: only once per audio element
+  mediaSource = audioCtx.createMediaElementSource(audioEl);
+  mediaSource.connect(analyser);
+  analyser.connect(audioCtx.destination);
+
+  wired = true;
+}
+
+async function toggleAudio(){
+  try{
+    // Ensure analyser is created in the same user gesture
+    wireAudioGraphOnce();
+
+    if (audioCtx.state === "suspended") await audioCtx.resume();
+
+    if (audioEl.paused){
+      await audioEl.play();
+      audioBtn.textContent = "❚❚";
+    } else {
+      audioEl.pause();
+      audioBtn.textContent = "▶";
+    }
+  } catch (e){
+    console.error("Audio toggle failed:", e);
+    audioBtn.textContent = "▶";
+  }
+}
+
+audioBtn.addEventListener("click", toggleAudio);
+
+// Keep icon synced even if user pauses via OS controls etc.
+audioEl.addEventListener("play",  () => audioBtn.textContent = "❚❚");
+audioEl.addEventListener("pause", () => audioBtn.textContent = "▶");
+
+/* =========================================================
+   BEAT DETECTION (safe when analyser not ready)
+   ========================================================= */
+let bassEMA = 0;
+let beatCooldown = 0;
+
+function getBassEnergy(){
+  if (!wired) return 0;
+
+  analyser.getByteFrequencyData(freq);
+  const N = 25;
+  let sum = 0;
+  for (let i=0; i<N && i<freq.length; i++) sum += freq[i];
+  return sum / Math.max(1, Math.min(N, freq.length));
+}
+
+function detectBeat(){
+  const e = getBassEnergy();
+  bassEMA = bassEMA * 0.92 + e * 0.08;
+
+  const beat = (beatCooldown <= 0) && (e > bassEMA * 1.55) && (e > 35);
+  if (beat) beatCooldown = 10;
+  else beatCooldown = Math.max(0, beatCooldown - 1);
+
+  return beat;
+}
+
+/* =========================================================
+   ABSTRACT BEAT FLOW BACKGROUND
+   ========================================================= */
+const bgCanvas = document.getElementById("bgCanvas");
+const bctx = bgCanvas.getContext("2d");
+
+function resizeBG(){
+  bgCanvas.width = Math.floor(window.innerWidth * devicePixelRatio);
+  bgCanvas.height = Math.floor(window.innerHeight * devicePixelRatio);
+  bctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+}
+window.addEventListener("resize", resizeBG);
+resizeBG();
+
+const ribbons = [];
+const pulses  = [];
+
+function rand(min,max){ return min + Math.random()*(max-min); }
+
+function spawnRibbon(strength=1){
+  const w = window.innerWidth, h = window.innerHeight;
+  ribbons.push({
+    x: rand(w*0.15, w*0.85),
+    y: rand(h*0.55, h*0.95),
+    a: rand(-Math.PI, Math.PI),
+    speed: rand(1.0, 2.6) * (0.8 + strength*0.6),
+    life: rand(120, 220),
+    pts: []
+  });
+}
+
+function spawnPulse(strength=1){
+  const w = window.innerWidth, h = window.innerHeight;
+  pulses.push({
+    x: rand(w*0.2, w*0.8),
+    y: rand(h*0.25, h*0.75),
+    r: 2,
+    dr: rand(2.5, 4.5) * (0.8 + strength*0.7),
+    a: 0.6
+  });
+}
+
+function drawFlow(){
+  const w = window.innerWidth, h = window.innerHeight;
+
+  // trail fade
+  bctx.fillStyle = "rgba(8,10,28,0.10)";
+  bctx.fillRect(0,0,w,h);
+
+  // beat spawn (only meaningful when audio playing + analyser wired)
+  if (!audioEl.paused && detectBeat()){
+    // simple strength estimate from baseline
+    const e = getBassEnergy();
+    const strength = Math.min(2.2, Math.max(0.6, (e / Math.max(1, bassEMA)) - 1));
+    const count = 2 + Math.floor(strength * 2);
+    for (let i=0;i<count;i++) spawnRibbon(strength);
+    for (let i=0;i<1+Math.floor(strength);i++) spawnPulse(strength);
+  }
+
+  // gentle ambient
+  if (!audioEl.paused && Math.random() < 0.015) spawnRibbon(0.5);
+
+  // ribbons
+  bctx.lineCap = "round";
+  bctx.lineJoin = "round";
+
+  for (let i=ribbons.length-1; i>=0; i--){
+    const r = ribbons[i];
+    r.life -= 1;
+    if (r.life <= 0){ ribbons.splice(i,1); continue; }
+
+    const t = performance.now()*0.001;
+    r.a += Math.sin(t*1.2 + r.x*0.01)*0.02 + Math.cos(t*0.9 + r.y*0.01)*0.02;
+
+    const upBias = -0.65;
+    r.x += Math.cos(r.a) * r.speed;
+    r.y += (Math.sin(r.a) + upBias) * r.speed;
+
+    // wrap
+    if (r.x < -50) r.x = w+50;
+    if (r.x > w+50) r.x = -50;
+    if (r.y < -80) r.y = h+80;
+    if (r.y > h+80) r.y = -80;
+
+    r.pts.push({x:r.x, y:r.y});
+    if (r.pts.length > 80) r.pts.shift();
+
+    const alpha = Math.max(0, Math.min(1, r.life / 140));
+    bctx.strokeStyle = `rgba(58,168,255,${0.10 + alpha*0.35})`;
+    bctx.shadowBlur = 14;
+    bctx.shadowColor = "rgba(58,168,255,0.9)";
+    bctx.lineWidth = 1.2 + alpha*1.6;
+
+    bctx.beginPath();
+    for (let p=0; p<r.pts.length; p++){
+      const pt = r.pts[p];
+      if (p === 0) bctx.moveTo(pt.x, pt.y);
+      else bctx.lineTo(pt.x, pt.y);
+    }
+    bctx.stroke();
+  }
+
+  // pulses
+  for (let i=pulses.length-1; i>=0; i--){
+    const p = pulses[i];
+    p.r += p.dr;
+    p.a *= 0.93;
+    if (p.a < 0.02){ pulses.splice(i,1); continue; }
+
+    bctx.strokeStyle = `rgba(58,168,255,${p.a})`;
+    bctx.shadowBlur = 18;
+    bctx.shadowColor = "rgba(58,168,255,0.9)";
+    bctx.lineWidth = 1.2;
+
+    bctx.beginPath();
+    bctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    bctx.stroke();
+  }
+
+  requestAnimationFrame(drawFlow);
+}
+requestAnimationFrame(drawFlow);
+
+/* =========================================================
+   TERMINAL FEED + BLOCKS
+   ========================================================= */
+const terminal = document.getElementById("terminal");
+const glyphs = "アァカサタナハマヤャラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$%&@#";
+const blockShapes = ["─","│","┌","┐","└","┘","◯","●","○"];
+
+let lines = [];
+let lineCount = 0;
+
+const asciiArtList = [
+`   (\\_._/)
+   ( o o )
+   (  -  )
+  o("===")o
+   /     \\
+  (       )
+  o       o
+  (       )
+   \\     /
+    "==="`,
+`   _
+  /_\\
+ (o o)
+  \\_/
+  /|\\
+  / \\`,
+`   ^__^
+   (oo)\\_______
+   (__)\\       )\\/\\
+       ||----w |
+       ||     ||`
+];
+
+function escHTML(s){
+  return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+}
+
+function generateNormalLine(){
+  let html = "";
+  const width = Math.floor(window.innerWidth / 10);
+  for (let i=0; i<width; i++){
+    const ch = glyphs.charAt(Math.floor(Math.random()*glyphs.length));
+    html += (Math.random() < 0.01) ? `<span class="white">${ch}</span>` : ch;
+  }
+  return `<div class="line">${html}</div>`;
+}
+
+function generateMiniBlock(){
+  const size = 20;
+  let out = "";
+  for (let y=0; y<size; y++){
+    let row = "";
+    for (let x=0; x<size; x++){
+      row += (Math.random() < 0.4)
+        ? `<span class="white">${blockShapes[Math.floor(Math.random()*blockShapes.length)]}</span>`
+        : " ";
+    }
+    out += `<div class="line">${row}</div>`;
+  }
+  return out;
+}
+
+function generateASCIIArt(){
+  const art = asciiArtList[Math.floor(Math.random()*asciiArtList.length)];
+  return art.split("\n").map(l => `<div class="line"><span class="white">${escHTML(l)}</span></div>`).join("");
+}
+
+/* Square procedural panel (not audio-reactive) */
+const procCanvas = document.getElementById("procCanvas");
+const pctx = procCanvas.getContext("2d");
+
+function makeProceduralPanelDataURL(){
+  const w = procCanvas.width, h = procCanvas.height;
+
+  pctx.clearRect(0,0,w,h);
+  pctx.fillStyle = "#080a1c";
+  pctx.fillRect(0,0,w,h);
+
+  pctx.shadowBlur = 10;
+  pctx.shadowColor = "#3aa8ff";
+
+  const strokes = 20 + Math.floor(Math.random()*25);
+  for (let i=0;i<strokes;i++){
+    pctx.strokeStyle = `hsla(${Math.random()*360},80%,60%,0.9)`;
+    pctx.beginPath();
+    pctx.moveTo(Math.random()*w, Math.random()*h);
+    pctx.lineTo(Math.random()*w, Math.random()*h);
+    pctx.stroke();
+  }
+
+  const dots = 12 + Math.floor(Math.random()*18);
+  for (let i=0;i<dots;i++){
+    pctx.fillStyle = `hsla(${Math.random()*360},80%,60%,0.9)`;
+    pctx.beginPath();
+    pctx.arc(Math.random()*w, Math.random()*h, 2 + Math.random()*10, 0, Math.PI*2);
+    pctx.fill();
+  }
+
+  const sq = 10 + Math.floor(Math.random()*18);
+  for (let i=0;i<sq;i++){
+    pctx.fillStyle = `hsla(${Math.random()*360},80%,60%,0.9)`;
+    const s = 3 + Math.random()*14;
+    pctx.fillRect(Math.random()*(w-s), Math.random()*(h-s), s, s);
+  }
+
+  return procCanvas.toDataURL();
+}
+
+function generateProceduralPanelBlock(){
+  const url = makeProceduralPanelDataURL();
+  return `<div class="line panel-wrap"><div class="panel"><img src="${url}" alt=""></div></div>`;
+}
+
+function pushLine(){
+  lineCount++;
+
+  if (lineCount % 500 === 0){
+    lines.push(generateProceduralPanelBlock());
+  } else if (lineCount % 200 === 0){
+    const art = generateASCIIArt();
+    art.split("</div>").filter(Boolean).map(s=>s+"</div>").forEach(s => lines.push(s));
+  } else if (lineCount % 100 === 0){
+    const b = generateMiniBlock();
+    b.split("</div>").filter(Boolean).map(s=>s+"</div>").forEach(s => lines.push(s));
+  } else {
+    lines.push(generateNormalLine());
+  }
+
+  const max = Math.floor(window.innerHeight / 19);
+  if (lines.length > max) lines.splice(0, lines.length - max);
+
+  terminal.innerHTML = lines.join("");
+}
+setInterval(pushLine, 100);
+</script>
+</body>
+</html>

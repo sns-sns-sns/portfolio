@@ -1,0 +1,538 @@
+html{
+overflow: hidden; 
+}
+
+body {
+  background-color: black;
+}
+
+
+/* Standard syntax */
+#div1 {
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    animation: mymove 20s infinite alternate;
+    animation-timing-function: linear;
+}
+
+#div2 {
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    animation: mymovei 15s infinite alternate;
+    animation-timing-function: ease;
+}
+
+#div3 {
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    animation: mymove 19s infinite alternate;
+    animation-timing-function: ease-in;
+    z-index:7;
+}
+
+
+
+#div4 {
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    animation: mymoveii 14s infinite alternate;
+    animation-timing-function: ease-out;
+}
+
+
+#div5 {
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    animation: mymove 23s infinite alternate;
+    animation-timing-function: ease-in-out;
+}
+
+#div6 {
+    top: 20%;
+    width: 55%;
+    height: 55%;
+    position: absolute;
+}
+
+#div7 {
+    width: 35%;
+    height: 35%;
+    position: absolute;
+    animation: mymoveiii 70s infinite alternate;
+    animation-timing-function: ease-in-out;
+}
+
+#div8 {
+    bottom: 0%;
+    left: 20%;
+    height: 90%;
+    position: absolute;  
+    display: none;      
+    z-index:7;
+}
+
+
+#div9 {
+    width: 10%;
+    height: 10%;
+    top:80%;
+    left:10%;
+    position: absolute;
+            z-index:4;
+}
+
+#div9i {
+    width: 10%;
+    height: 10%;
+    top:60%;
+    left:30%;
+    position: absolute;
+            z-index:4;
+}
+
+#div9ii {
+    width: 10%;
+    height: 10%;
+    top:70%;
+    left:20%;
+    position: absolute;
+            z-index:4;
+}
+
+#div9iii {
+    width: 8%;
+    height: 8%;
+    top:85%;
+    left:10%;
+    position: absolute;
+            z-index:4;
+}
+
+#div9iv {
+    width: 7%;
+    height: 7%;
+    top:89%;
+    left:15%;
+    position: absolute;
+            z-index:4;
+}
+
+#div9v {
+    width: 9%;
+    height: 9%;
+    top:84%;
+    left:20%;
+    position: absolute;
+            z-index:4;
+}
+
+#div9vi {
+    width: 10%;
+    height: 10%;
+    top:60%;
+    left:10%;
+    position: absolute;
+            z-index:4;
+}
+
+#div9vii {
+    width: 10%;
+    height: 10%;
+    top:10%;
+    right:30%;
+    position: absolute;
+            z-index:4;
+}
+
+#div9viii {
+    width: 10%;
+    height: 10%;
+    top:30%;
+    right:25%;
+    position: absolute;
+            z-index:4;
+}
+
+#div9ix {
+    width: 8%;
+    height: 8%;
+    top:15%;
+    right:10%;
+    position: absolute;
+            z-index:4;
+}
+
+#div9x {
+    width: 7%;
+    height: 7%;
+    top:29%;
+    right:15%;
+    position: absolute;
+            z-index:4;
+}
+
+#div9xi {
+    width: 9%;
+    height: 9%;
+    top:24%;
+    right:20%;
+    position: absolute;
+        z-index:4;
+}
+
+
+
+
+
+#div10 {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    animation: mymove 20s infinite alternate;
+    animation-timing-function: linear;
+        z-index:5;
+}
+
+#div11 {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    animation: mymove 20s infinite alternate;
+    animation-timing-function: linear;
+        z-index:5;
+}
+
+#div12 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    animation: mymove 20s infinite alternate;
+    animation-timing-function: linear;
+        z-index:5;
+}
+
+#div13 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    animation: mymove 20s infinite alternate;
+    animation-timing-function: linear;
+        z-index:5;
+}
+
+
+#div14 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    animation: mymove 20s infinite alternate;
+    animation-timing-function: linear;
+    z-index:5;
+}
+
+
+
+
+
+#diva {
+    top: 0px;
+    right: 15%;
+    height: 100%;
+    position: absolute;        
+    z-index:6;
+    display: none;
+}
+
+#divb {
+    top: 0px;
+    right: 0px;
+    height: 90%;
+    position: absolute;
+        display: none; 
+                z-index:2;       
+
+}
+
+
+#divc {
+    bottom: 0px;
+    left: 0px;
+    height: 90%;
+    position: absolute;
+        display: none;        
+    z-index:-2;
+
+}
+
+#divd {
+    bottom: 0px;
+    left: 0%;
+    height: 100%;
+    position: absolute; 
+        display: none;       
+    z-index:-3;
+}
+
+#dive {
+    bottom: 0%;
+    right: 0%;
+    height: 100%;
+    position: absolute;  
+    display: none;      
+    z-index:7;
+}
+
+#divf {
+    bottom: 0px;
+    right: 20%;
+    height: 90%;
+    position: absolute;
+        display: none;        
+    z-index:-4;
+
+}
+
+#divg {
+    bottom: 0px;
+    right: 0%;
+    height: 60%;
+    position: absolute; 
+        display: none;       
+    z-index:-3;
+}
+
+#divh {
+    top: 0%;
+    right: 15%;
+    height: 100%;
+    position: absolute;  
+    display: none;      
+    z-index:7;
+}
+
+#divi {
+    top: 0%;
+    left: 0%;
+    height: 60%;
+    position: absolute;  
+    display: none;      
+    z-index:2;
+}
+
+
+
+#divki {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    animation: mymove 20s infinite alternate;
+    animation-timing-function: linear;
+        z-index:5;
+}
+
+#divkii {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    animation: mymove 20s infinite alternate;
+    animation-timing-function: linear;
+        z-index:5;
+}
+
+#divkiii {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    animation: mymove 20s infinite alternate;
+    animation-timing-function: linear;
+        z-index:5;
+}
+
+#divkvi {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    animation: mymove 20s infinite alternate;
+    animation-timing-function: linear;
+        z-index:5;
+}
+
+
+#divkv {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    animation: mymove 20s infinite alternate;
+    animation-timing-function: linear;
+    z-index:5;
+}
+
+
+#div15 {
+    bottom: 40%;
+    left: 20%;
+    height: 50%;
+    position: absolute;  
+    display: none;      
+    z-index:0;
+}
+
+#div16 {
+    bottom: 20%;
+    left: 40%;
+    height: 40%;
+    position: absolute;  
+    display: none;      
+    z-index:-5;
+}
+
+#div17 {
+    bottom: 0%;
+    left: 0%;
+    height: 100%;
+    position: absolute;  
+    display: none;      
+    z-index:-7;
+}
+
+#div18 {
+    bottom: 0%;
+    right: 0%;
+    height: 100%;
+    position: absolute;  
+    display: none;      
+    z-index:-7;
+}
+
+#div19 {
+    bottom: 0%;
+    left: 0%;
+    height: 100%;
+    position: absolute;  
+    display: none;      
+    z-index:-9;
+}
+
+#div20 {
+    bottom: 0%;
+    left: 0%;
+    height: 100%;
+    position: absolute;  
+    display: none;      
+    z-index:-8;
+}
+
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+
+#bl1 {
+        -webkit-animation: rotation 60s infinite linear;
+        max-width: 100%;
+}
+
+#bl2 {
+        -webkit-animation: rotation 30s infinite linear;
+        max-width: 100%;
+}
+
+#bl3 {
+        -webkit-animation: rotation 20s infinite linear;
+        max-width: 100%;
+}
+
+#bl4 {
+        -webkit-animation: rotation 10s infinite linear;
+        max-width: 100%;
+}
+
+#bl5 {
+        -webkit-animation: rotation 15s infinite linear;
+        max-width: 100%;
+}
+
+#bl6 {
+        -webkit-animation: rotation 60s infinite linear;
+        max-width: 100%;
+}
+
+#bl9 {
+        -webkit-animation: rotation 120s infinite linear;
+        max-width: 100%;
+}
+
+
+
+
+
+/* Standard syntax */
+@keyframes mymove {
+    from {left: 30px;}
+    to {left: 700px;}
+}
+
+@keyframes mymovei {
+    from {left: 100px;}
+    to {left: 600px;}
+}
+
+@keyframes mymoveii {
+    from {left: 200px;}
+    to {left: 500px;}
+}
+
+@keyframes mymoveiii {
+    from {left: 300px;}
+    to {left: 800px;}
+}
+
+@keyframes mymoveiiii {
+    from {left: 100px;}
+    to {left: 800px;}
+}
+
+
+.cen {
+        position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+@-webkit-keyframes rotation {
+        from {
+                -webkit-transform: rotate(0deg);
+        }
+        to {
+                -webkit-transform: rotate(359deg);
+        }
+}
+
+
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+.one {
+	position: absolute;
+
+}
+
+.two {
+	position: absolute;
+}
+
+
+html {
+  height:100%;
+  width:100%;
+}

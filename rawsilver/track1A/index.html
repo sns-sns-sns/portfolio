@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- =========================================================
+       BASE PAGE: YOUR ORIGINAL INDEX <head> CONTENT
+       You already had this title + big <style>. Keep it here.
+       ========================================================= -->
+  <title>TECHNO SIGNAL — NIGHTSKY GRID</title>
+
+  <style>
+    :root{
+      --bg:#080a1c;
+
+      --glowA: rgba(58,168,255,0.35);
+      --glowW: rgba(255,255,255,0.30);
+
+      --ink:#0b0e29;
+      --white:#ffffff;
+
+      --matrix:#3aa8ff;
+      --grid: rgba(0,0,0,0.22);
+    }
+
+html, body{
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+  background: var(--bg) !important;
+  overflow:hidden;
+}
+
+    body{ font-family:monospace; }
+
+    video, canvas{
+      display:block;
+      border:0;
+      outline:0;
+    }
+
+    @supports (height: 100dvh){
+      #bgVideo, #matrixCanvas, #flowCanvas, #topRibbons{
+        height:100dvh !important;
+      }
+    }
+
+    #bgVideo{
+      position:fixed;
+      inset:0;
+      width:100vw;
+      height:100vh;
+      object-fit:cover;
+      pointer-events:none;
+      z-index:0;
+      filter:none;
+      background:var(--bg);
+    }
+
+    #matrixCanvas{
+      position:fixed;
+      inset:0;
+      width:100vw;
+      height:100vh;
+      z-index:2;
+      pointer-events:none;
+    }
+
+    #terminal{
+      position:fixed;
+      bottom:0;
+      width:100%;
+      padding:20px;
+      box-sizing:border-box;
+      font-size:16px;
+      line-height:1.2em;
+      white-space:pre;
+      color:var(--ink);
+      text-shadow:
+        0 0 5px rgba(11,14,41,0.65),
+        0 0 10px var(--glowA),
+        0 0 18px var(--glowA);
+      pointer-events:none;
+      z-index:6;
+    }
+    .line{ display:block; }
+    .white{
+      color:var(--white);
+      text-shadow:
+        0 0 6px rgba(255,255,255,0.95),
+        0 0 16px rgba(255,255,255,0.40),
+        0 0 28px rgba(58,168,255,0.25);
+    }
+
+    .widget{
+      position:fixed;
+      right:18px;
+
+      width:30vw;
+      height:30vw;
+      max-width:420px;
+      max-height:420px;
+      min-width:180px;
+      min-height:180px;
+
+      border:1px solid rgba(170,200,255,0.22);
+      box-shadow:
+        0 0 18px rgba(58,168,255,0.18),
+        0 0 28px rgba(255,255,255,0.10);
+      border-radius:12px;
+      overflow:hidden;
+      background:rgba(8,10,28,0.82);
+      pointer-events:none;
+    }
+
+    #procWidget{
+      bottom:18px;
+      z-index:7;
+    }
+
+    #videoWidget{
+      bottom: calc(18px + 30vw + 14px);
+      z-index:8;
+    }
+
+    @media (min-width: 1400px){
+      #videoWidget{ bottom: calc(18px + 420px + 14px); }
+    }
+    @media (max-width: 560px){
+      #videoWidget{ bottom: calc(18px + 180px + 12px); }
+    }
+
+    #procLive{
+      width:100%;
+      height:100%;
+    }
+
+    #videoWidget video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    #flowCanvas{
+      position:fixed;
+      inset:0;
+      width:100vw;
+      height:100vh;
+      z-index:9997;
+      pointer-events:none;
+      mix-blend-mode: screen;
+    }
+
+    #topRibbons{
+      position:fixed;
+      inset:0;
+      width:100vw;
+      height:100vh;
+      z-index:9998;
+      pointer-events:none;
+      mix-blend-mode: screen;
+    }
+
+    #audioBtn{
+      position:fixed;
+      bottom:38px;
+      left:50%;
+      transform:translateX(-50%);
+      width:56px;
+      height:56px;
+      border:none;
+      border-radius:999px;
+      background:rgba(58,168,255,0.14);
+      box-shadow:
+        0 0 14px rgba(58,168,255,0.30),
+        0 0 26px rgba(255,255,255,0.10);
+      cursor:pointer;
+      z-index:10001;
+      display:grid;
+      place-items:center;
+      color:#eaf2ff;
+      font-size:18px;
+      user-select:none;
+      backdrop-filter: blur(4px);
+    }
+    #audioBtn:hover{ background:rgba(58,168,255,0.22); }
+
+    #errorBox{
+      position:fixed;
+      top:10px;
+      left:10px;
+      right:10px;
+      max-height:42vh;
+      overflow:auto;
+      z-index:99999;
+      padding:10px 12px;
+      background:rgba(0,0,0,0.55);
+      color:#fff;
+      font:12px/1.35 monospace;
+      border:1px solid rgba(255,255,255,0.20);
+      border-radius:8px;
+      display:none;
+      white-space:pre-wrap;
+    }
+  </style>
+
+  <!-- =========================================================
+       ROCKERY ASSETS (these come from rockery.html)
+       - brassica.css (animation positioning + rotations)
+       - jquery-latest.min.js (required by fade.js)
+       ========================================================= -->
+  <link rel="stylesheet" href="css/brassica.css" />  <!-- :contentReference[oaicite:5]{index=5} -->
+  <script src="jquery-latest.min.js"></script>       <!-- :contentReference[oaicite:6]{index=6} -->
+
+  <!-- =========================================================
+       IMPORTANT OVERRIDES:
+       brassica.css sets body background to black.
+       We force your base page background to stay your --bg.
+       ========================================================= -->
+  <style>
+    html, body { background: var(--bg) !important; }
+
+    /* ROCKERY OVERLAY CONTAINER:
+       - fixed fullscreen
+       - click-through
+       - sits above your base visuals
+    */
+    #rockery-overlay{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: transparent;
+
+    z-index: 20000;
+
+    /* IMPORTANT: create stacking context so negative z-index children don't fall behind the whole page */
+    isolation: isolate;
+  }
+
+  #rockery-overlay, #rockery-overlay *{
+    pointer-events: none;
+  }
+  </style>
+</head>
+  
+<body>
+
+  <video id="bgVideo" autoplay muted loop playsinline>
+    <source src="night.mp4" type="video/mp4">
+  </video>
+
+  <div id="errorBox"></div>
+
+  <canvas id="matrixCanvas"></canvas>
+
+  <div id="terminal"></div>
+
+  <div id="procWidget" class="widget">
+    <canvas id="procLive"></canvas>
+  </div>
+
+  <div id="videoWidget" class="widget">
+    <video id="widgetVideo" autoplay muted loop playsinline>
+      <source src="widget.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <audio id="player" preload="auto" loop>
+    <source src="nightime.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button id="audioBtn" aria-label="Play / Pause">▶</button>
+
+  <canvas id="flowCanvas"></canvas>
+  <canvas id="topRibbons"></canvas>
+
+
+
+
+  <div id="rockery-overlay">
+
+    <div id="div1"><img id="bl1" src="images/b1.png"></div>
+    <div id="div2"><img id="bl2" src="images/b2.png"></div>
+    <div id="div3"><img id="bl3" src="images/b3.png"></div>
+    <div id="div4"><img id="bl4" src="images/b4.png"></div>
+    <div id="div5"><img id="bl5" src="images/b5.png"></div>
+    <div id="div6"><img id="bl6" src="images/o2.png"></div>
+    <div id="div7"><img id="bl6" src="images/o1.png"></div>
+    <div id="div8"><img src="images/sal.png"></div>
+
+    <div id="div9"><img id="bl9" src="images/an.png"></div>
+    <div id="div9i"><img id="bl9" src="images/an1.png"></div>
+    <div id="div9ii"><img id="bl9" src="images/an2.png"></div>
+    <div id="div9iii"><img id="bl9" src="images/an3.png"></div>
+    <div id="div9iv"><img id="bl9" src="images/an4.png"></div>
+    <div id="div9v"><img id="bl9" src="images/an5.png"></div>
+    <div id="div9vi"><img id="bl9" src="images/an.png"></div>
+    <div id="div9vii"><img id="bl9" src="images/an1.png"></div>
+    <div id="div9viii"><img id="bl9" src="images/an2.png"></div>
+    <div id="div9ix"><img id="bl9" src="images/an3.png"></div>
+    <div id="div9x"><img id="bl9" src="images/an4.png"></div>
+    <div id="div9xi"><img id="bl9" src="images/an5.png"></div>
+
+    <div id="div10"><img id="bl3" src="images/s1.png"></div>
+    <div id="div11"><img id="bl5" src="images/s2.png"></div>
+    <div id="div12"><img id="bl4" src="images/s3.png"></div>
+    <div id="div13"><img id="bl2" src="images/s4.png"></div>
+    <div id="div14"><img id="bl1" src="images/s5.png"></div>
+
+    <div id="diva"><img src="images/sid.png"></div>
+    <div id="divb"><img src="images/cae1.png"></div>
+    <div id="divc"><img src="images/cae2.png"></div>
+    <div id="divd"><img src="images/bra.png"></div>
+    <div id="dive"><img src="images/bra2.png"></div>
+    <div id="divf"><img src="images/teu3.png"></div>
+    <div id="divg"><img src="images/del1.png"></div>
+    <div id="divh"><img src="images/del2.png"></div>
+    <div id="divi"><img src="images/cae.png"></div>
+
+    <div id="divki"><img id="bl1" src="images/k1.png"></div>
+    <div id="divkii"><img id="bl2" src="images/k2.png"></div>
+    <div id="divkiii"><img id="bl4" src="images/k3.png"></div>
+    <div id="divkvi"><img id="bl9" src="images/k4.png"></div>
+    <div id="divkv"><img id="bl5" src="images/k5.png"></div>
+
+    <div id="div15"><img src="images/anti2.png"></div>
+    <div id="div16"><img src="images/anti2.png"></div>
+    <div id="div17"><img src="images/back1.png"></div>
+    <div id="div18"><img src="images/back2.png"></div>
+    <div id="div19"><img src="images/back3.png"></div>
+    <div id="div20"><img src="images/back4.png"></div>
+
+  </div>
+
+<script>
+/* =========================================================
+   ERROR REPORTING (optional)
+   ========================================================= */
+(function(){
+  const box = document.getElementById("errorBox");
+  function show(msg){
+    box.style.display = "block";
+    box.textContent += msg + "\n\n";
+  }
+  window.addEventListener("error", (e) => {
+    const stack = e.error && e.error.stack ? e.error.stack : "";
+    show("JS ERROR:\n" + (e.message || "Script error.") + "\n" + stack);
+  });
+  window.addEventListener("unhandledrejection", (e) => {
+    const r = e.reason;
+    const msg = (r && (r.stack || r.message)) ? (r.stack || r.message) : String(r);
+    show("PROMISE ERROR:\n" + msg);
+  });
+  window.__showErr = show;
+})();
+
+/* =========================================================
+   AUDIO (UNCHANGED)
+   ========================================================= */
+const audioEl = document.getElementById("player");
+const audioBtn = document.getElementById("audioBtn");
+
+function toggleAudio(){
+  if (audioEl.paused){
+    audioEl.play().then(() => {
+      audioBtn.textContent = "❚❚";
+    }).catch((e) => {
+      console.error(e);
+      audioBtn.textContent = "▶";
+    });
+  } else {
+    audioEl.pause();
+    audioBtn.textContent = "▶";
+  }
+}
+audioBtn.addEventListener("click", toggleAudio);
+
+/* =========================================================
+   Helpers
+   ========================================================= */
+function getCSSVar(name){
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+function rand(a,b){ return a + Math.random()*(b-a); }
+
+/* =========================================================
+   PERFORMANCE: overlay DPR cap
+   ========================================================= */
+const OVERLAY_DPR_CAP = 1.5;
+function overlayDPR(){
+  return Math.min(window.devicePixelRatio || 1, OVERLAY_DPR_CAP);
+}
+
+/* =========================================================
+   THEME CYCLE
+   ========================================================= */
+const NIGHT_THEMES = [
+  { bg:"#080a1c", glowA:"rgba(58,168,255,0.35)", glowW:"rgba(255,255,255,0.28)" },
+  { bg:"#070919", glowA:"rgba(80,160,255,0.30)", glowW:"rgba(255,255,255,0.26)" },
+  { bg:"#090c22", glowA:"rgba(58,168,255,0.28)", glowW:"rgba(255,255,255,0.24)" },
+  { bg:"#060818", glowA:"rgba(90,140,255,0.28)", glowW:"rgba(255,255,255,0.22)" },
+  { bg:"#0a0d24", glowA:"rgba(58,168,255,0.32)", glowW:"rgba(255,255,255,0.24)" }
+];
+const MATRIX_PALETTE = ["#39a9ff","#6cff8d","#ff7ad9","white"];
+
+let themeIndex = 0;
+let GLOW_A = "rgba(58,168,255,0.35)";
+let GRID_C = "rgba(0,0,0,0.22)";
+
+function applyNightTheme(){
+  const t = NIGHT_THEMES[themeIndex % NIGHT_THEMES.length];
+  document.documentElement.style.setProperty("--bg", t.bg);
+  document.documentElement.style.setProperty("--glowA", t.glowA);
+  document.documentElement.style.setProperty("--glowW", t.glowW);
+
+  const m = MATRIX_PALETTE[Math.floor(Math.random()*MATRIX_PALETTE.length)];
+  document.documentElement.style.setProperty("--matrix", m);
+
+  GLOW_A = t.glowA;
+  GRID_C = getCSSVar("--grid") || "rgba(0,0,0,0.22)";
+}
+applyNightTheme();
+
+setInterval(() => {
+  themeIndex = (themeIndex + 1) % NIGHT_THEMES.length;
+  applyNightTheme();
+}, 15000);
+
+/* =========================================================
+   MATRIX CANVAS: DOTS ONLY GRID + COMETS (UNCHANGED)
+   ========================================================= */
+const matrixCanvas = document.getElementById("matrixCanvas");
+const mctx = matrixCanvas.getContext("2d");
+
+const matrixGlyphs = "OKLOUISTHESHIT";
+const mFont = 18;
+let mCols = 0;
+let comets = [];
+
+let gridDots = [];
+let gridDotsInit = false;
+
+function resizeMatrix(){
+  const dpr = overlayDPR();
+  matrixCanvas.width  = Math.floor(window.innerWidth  * dpr);
+  matrixCanvas.height = Math.floor(window.innerHeight * dpr);
+  mctx.setTransform(dpr,0,0,dpr,0,0);
+
+  mCols = Math.max(1, Math.floor(window.innerWidth / mFont));
+  comets = new Array(mCols).fill(null);
+
+  gridDotsInit = false;
+}
+window.addEventListener("resize", resizeMatrix);
+resizeMatrix();
+
+function maybeSpawnComet(col){
+  const base = audioEl.paused ? 0.00005 : 0.00012;
+  if (Math.random() < base){
+    comets[col] = {
+      y: -rand(40, 260),
+      speed: rand(6.2, 11.5),
+      len: rand(10, 22),
+      life: rand(220, 420)
+    };
+  }
+}
+
+function initGridDots(){
+  gridDotsInit = true;
+  gridDots = [];
+  const count = 70;
+  for (let i=0;i<count;i++){
+    gridDots.push({
+      x: Math.random()*window.innerWidth,
+      y: Math.random()*window.innerHeight,
+      r: 1.2 + Math.random()*2.6,
+      vx: (Math.random()-0.5)*0.15,
+      vy: (Math.random()-0.5)*0.15
+    });
+  }
+}
+
+function drawGridDots(w,h){
+  if (!gridDotsInit) initGridDots();
+
+  mctx.save();
+  mctx.shadowBlur = 0;
+  mctx.shadowColor = "rgba(0,0,0,0)";
+  mctx.fillStyle = GRID_C;
+
+  for (const d of gridDots){
+    d.x += d.vx;
+    d.y += d.vy;
+
+    if (d.x < -10) d.x = w+10;
+    if (d.x > w+10) d.x = -10;
+    if (d.y < -10) d.y = h+10;
+    if (d.y > h+10) d.y = -10;
+
+    mctx.beginPath();
+    mctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
+    mctx.fill();
+  }
+
+  mctx.restore();
+}
+
+function drawMatrix(){
+  try{
+    const w = window.innerWidth, h = window.innerHeight;
+
+    mctx.clearRect(0,0,w,h);
+    drawGridDots(w,h);
+
+    mctx.font = `${mFont}px monospace`;
+
+    for (let c=0; c<mCols; c++){
+      if (!comets[c]) { maybeSpawnComet(c); continue; }
+      const cm = comets[c];
+      cm.life -= 1;
+
+      for (let k=0; k<cm.len; k++){
+        const y = cm.y - k*mFont;
+        if (y < -mFont || y > h + mFont) continue;
+
+        const ch = matrixGlyphs.charAt(Math.floor(Math.random()*matrixGlyphs.length));
+        const a = Math.max(0, 0.10 - (k/(cm.len))*0.09);
+        mctx.shadowBlur = 12;
+        mctx.shadowColor = "rgba(58,168,255,0.25)";
+        mctx.fillStyle = `rgba(58,168,255,${a})`;
+        mctx.fillText(ch, c*mFont, y);
+      }
+
+      const headCh = matrixGlyphs.charAt(Math.floor(Math.random()*matrixGlyphs.length));
+      const headIsStar = Math.random() < 0.06;
+      mctx.shadowBlur = headIsStar ? 18 : 12;
+      mctx.shadowColor = headIsStar ? "rgba(255,255,255,0.55)" : "rgba(58,168,255,0.30)";
+      mctx.fillStyle = headIsStar ? "rgba(255,255,255,0.62)" : "rgba(58,168,255,0.22)";
+      mctx.fillText(headCh, c*mFont, cm.y);
+
+      cm.y += cm.speed;
+
+      if (cm.y > h + cm.len*mFont || cm.life <= 0){
+        comets[c] = null;
+      }
+    }
+
+    requestAnimationFrame(drawMatrix);
+  } catch (err){
+    window.__showErr("drawMatrix crashed:\n" + (err && err.stack ? err.stack : String(err)));
+  }
+}
+requestAnimationFrame(drawMatrix);
+
+/* =========================================================
+   TERMINAL GLYPH FEED (UNCHANGED)
+   ========================================================= */
+const terminal = document.getElementById("terminal");
+const glyphs = matrixGlyphs;
+const blockShapes = ["─","│","┌","┐","└","┘","╱","╲","╳","●","○","◯"];
+
+let lines = [];
+let lineCount = 0;
+
+const asciiArtList = [
+`   (\\_._/)
+   ( o o )
+   (  -  )
+  o("===")o
+   /     \\
+  (       )
+  o       o
+  (       )
+   \\     /
+    "==="`,
+`   _
+  /_\\
+ (o o)
+  \\_/
+  /|\\
+  / \\`,
+`   ^__^
+   (oo)\\_______
+   (__)\\       )\\/\\
+       ||----w |
+       ||     ||`
+];
+
+function escHTML(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+function termCols(){ return Math.floor(window.innerWidth / 10); }
+
+const STAR_CHANCE = 0.012;
+
+function generateNormalLine(){
+  let html = "";
+  const width = termCols();
+  for (let i=0; i<width; i++){
+    const ch = glyphs.charAt(Math.floor(Math.random()*glyphs.length));
+    html += (Math.random() < STAR_CHANCE) ? `<span class="white">${ch}</span>` : ch;
+  }
+  return `<div class="line">${html}</div>`;
+}
+
+function generateFullWidthWhiteBlock(){
+  const height = 20;
+  const width = termCols();
+  let out = "";
+  for (let y=0; y<height; y++){
+    let row = "";
+    for (let x=0; x<width; x++){
+      const r = Math.random();
+      if (r < 0.14){
+        const s = blockShapes[Math.floor(Math.random()*blockShapes.length)];
+        row += `<span class="white">${s}</span>`;
+      } else if (r < 0.16){
+        const ch = glyphs.charAt(Math.floor(Math.random()*glyphs.length));
+        row += `<span class="white">${ch}</span>`;
+      } else {
+        row += " ";
+      }
+    }
+    out += `<div class="line">${row}</div>`;
+  }
+  return out;
+}
+
+function generateASCIIArt(){
+  const art = asciiArtList[Math.floor(Math.random()*asciiArtList.length)];
+  return art.split("\n").map(l => `<div class="line"><span class="white">${escHTML(l)}</span></div>`).join("");
+}
+
+const EVERY_WHITE_BLOCK = 45;
+const EVERY_ASCII       = 70;
+
+function pushLine(){
+  try{
+    lineCount++;
+
+    if (lineCount % EVERY_ASCII === 0){
+      const art = generateASCIIArt();
+      art.split("</div>").filter(Boolean).map(s=>s+"</div>").forEach(s => lines.push(s));
+    } else if (lineCount % EVERY_WHITE_BLOCK === 0){
+      const blk = generateFullWidthWhiteBlock();
+      blk.split("</div>").filter(Boolean).map(s=>s+"</div>").forEach(s => lines.push(s));
+    } else {
+      lines.push(generateNormalLine());
+    }
+
+    const max = Math.floor(window.innerHeight / 19);
+    if (lines.length > max) lines.splice(0, lines.length - max);
+
+    terminal.innerHTML = lines.join("");
+  } catch (err){
+    window.__showErr("pushLine crashed:\n" + (err && err.stack ? err.stack : String(err)));
+  }
+}
+setInterval(pushLine, 300);
+
+/* =========================================================
+   RIBBON TRAILS (FLOW) — OPTIMIZED (no per-frame allocations)
+   - Uses fixed-size ring buffers (Float32Array) for points
+   - Caps max ribbons + adaptive shadow cost when many
+   - Avoids window.innerWidth/Height spam inside loops
+   ========================================================= */
+const flowCanvas = document.getElementById("flowCanvas");
+// desynchronized can reduce jank on some browsers (safe if unsupported)
+const fctx = flowCanvas.getContext("2d", { alpha:true, desynchronized:true });
+
+let FLOW_W = 0, FLOW_H = 0;
+
+function resizeFlow(){
+  const dpr = overlayDPR();
+  FLOW_W = window.innerWidth;
+  FLOW_H = window.innerHeight;
+
+  flowCanvas.width  = Math.floor(FLOW_W * dpr);
+  flowCanvas.height = Math.floor(FLOW_H * dpr);
+  fctx.setTransform(dpr,0,0,dpr,0,0);
+}
+window.addEventListener("resize", resizeFlow);
+resizeFlow();
+
+const BPM = 130;
+const BEAT_SEC = 60 / BPM;
+let lastBeatIndex = -1;
+
+// ring-buffer ribbon config
+const FLOW_MAX_RIBBONS = 42;     // hard cap to prevent spikes
+const FLOW_MAX_PTS     = 120;    // same as your previous tail length
+
+function makeRibbon(strength=1){
+  return {
+    x: rand(FLOW_W*0.18, FLOW_W*0.82),
+    y: rand(FLOW_H*0.56, FLOW_H*0.94),
+    a: rand(-Math.PI, Math.PI),
+    seed: Math.random()*1000,
+    speed: rand(0.95, 1.95) * (0.95 + strength*0.12),
+    life: (rand(160, 280) | 0),
+
+    // ring buffer
+    xs: new Float32Array(FLOW_MAX_PTS),
+    ys: new Float32Array(FLOW_MAX_PTS),
+    head: 0,
+    size: 0
+  };
+}
+
+const ribbons = [];
+
+function spawnRibbon(strength=1){
+  // cap (drop oldest) to avoid a sudden perf cliff when audio kicks in
+  if (ribbons.length >= FLOW_MAX_RIBBONS) ribbons.shift();
+  ribbons.push(makeRibbon(strength));
+}
+
+function updateBeat(){
+  if (audioEl.paused) return;
+  const idx = (audioEl.currentTime / BEAT_SEC) | 0;
+  if (idx !== lastBeatIndex){
+    lastBeatIndex = idx;
+    spawnRibbon(1);
+    if (Math.random() < 0.28) spawnRibbon(1);
+  }
+}
+
+function ribbonAddPoint(r, x, y){
+  r.xs[r.head] = x;
+  r.ys[r.head] = y;
+  r.head = (r.head + 1) % FLOW_MAX_PTS;
+  if (r.size < FLOW_MAX_PTS) r.size++;
+}
+
+function ribbonStroke(r){
+  const n = r.size;
+  if (n < 2) return;
+
+  // Oldest point index in ring
+  let idx = (r.head - n);
+  if (idx < 0) idx += FLOW_MAX_PTS;
+
+  fctx.beginPath();
+  fctx.moveTo(r.xs[idx], r.ys[idx]);
+  for (let i = 1; i < n; i++){
+    idx++;
+    if (idx === FLOW_MAX_PTS) idx = 0;
+    fctx.lineTo(r.xs[idx], r.ys[idx]);
+  }
+  fctx.stroke();
+}
+
+let flowFrame = 0;
+let flowLastT = 0;
+
+// simple “idle fps” throttle to reduce background work
+const IDLE_FPS = 24;
+const IDLE_MS  = 1000 / IDLE_FPS;
+
+function drawFlow(tNow){
+  try{
+    const activeFlow = (ribbons.length > 0) || (!audioEl.paused);
+
+    // Throttle when idle (keeps it smooth when active)
+    if (!activeFlow){
+      if (tNow - flowLastT < IDLE_MS){
+        requestAnimationFrame(drawFlow);
+        return;
+      }
+      flowLastT = tNow;
+    }
+
+    flowFrame++;
+
+    // cheaper fade pass (still every other frame like you had)
+    if ((flowFrame & 1) === 0){
+      fctx.globalCompositeOperation = "source-over";
+      fctx.fillStyle = "rgba(0,0,0,0.08)";
+      fctx.fillRect(0,0,FLOW_W,FLOW_H);
+    }
+
+    fctx.globalCompositeOperation = "lighter";
+    fctx.lineCap = "round";
+    fctx.lineJoin = "round";
+
+    // adaptive shadow: blur is expensive when many strokes
+    const many = ribbons.length > 20;
+    fctx.shadowBlur = many ? 10 : 16;
+    fctx.shadowColor = GLOW_A;
+
+    updateBeat();
+    if (!audioEl.paused && Math.random() < 0.007) spawnRibbon(0.6);
+
+    const t = tNow * 0.001;
+
+    for (let i = ribbons.length - 1; i >= 0; i--){
+      const r = ribbons[i];
+      r.life--;
+      if (r.life <= 0){
+        ribbons.splice(i,1);
+        continue;
+      }
+
+      r.a += Math.sin(t + r.seed + r.x*0.01) * 0.02;
+
+      r.x += Math.cos(r.a) * r.speed;
+      r.y += Math.sin(r.a) * r.speed - 1.05;
+
+      if (r.x < -50) r.x = FLOW_W + 50;
+      else if (r.x > FLOW_W + 50) r.x = -50;
+      if (r.y < -80) r.y = FLOW_H + 80;
+      else if (r.y > FLOW_H + 80) r.y = -80;
+
+      ribbonAddPoint(r, r.x, r.y);
+
+      const alpha = Math.max(0, Math.min(1, r.life / 240));
+      fctx.strokeStyle = `rgba(234,242,255,${0.04 + alpha*0.22})`;
+      fctx.lineWidth = 1.3;
+
+      ribbonStroke(r);
+    }
+
+    fctx.globalCompositeOperation = "source-over";
+    requestAnimationFrame(drawFlow);
+  } catch (err){
+    window.__showErr("drawFlow crashed:\n" + (err && err.stack ? err.stack : String(err)));
+  }
+}
+requestAnimationFrame(drawFlow);
+
+/* =========================================================
+   TOP SPARK RIBBONS — OPTIMIZED (same approach)
+   ========================================================= */
+const topCanvas = document.getElementById("topRibbons");
+const tctx = topCanvas.getContext("2d", { alpha:true, desynchronized:true });
+
+let TOP_W = 0, TOP_H = 0;
+
+function resizeTop(){
+  const dpr = overlayDPR();
+  TOP_W = window.innerWidth;
+  TOP_H = window.innerHeight;
+
+  topCanvas.width  = Math.floor(TOP_W * dpr);
+  topCanvas.height = Math.floor(TOP_H * dpr);
+  tctx.setTransform(dpr,0,0,dpr,0,0);
+}
+window.addEventListener("resize", resizeTop);
+resizeTop();
+
+const TOP_MAX_RIBBONS = 34;
+const TOP_MAX_PTS     = 90;
+
+function makeTopRibbon(){
+  return {
+    x: rand(TOP_W*0.15, TOP_W*0.85),
+    y: rand(10, TOP_H*0.25),
+    a: rand(-Math.PI*0.2, Math.PI*1.2),
+    seed: Math.random()*1000,
+    speed: rand(1.2, 2.6),
+    life: (rand(140, 240) | 0),
+
+    xs: new Float32Array(TOP_MAX_PTS),
+    ys: new Float32Array(TOP_MAX_PTS),
+    head: 0,
+    size: 0
+  };
+}
+
+const topRibbonParticles = [];
+
+function spawnTopRibbon(){
+  if (topRibbonParticles.length >= TOP_MAX_RIBBONS) topRibbonParticles.shift();
+  topRibbonParticles.push(makeTopRibbon());
+}
+
+setInterval(() => {
+  if (Math.random() < (audioEl.paused ? 0.10 : 0.25)) spawnTopRibbon();
+}, 220);
+
+function topAddPoint(r, x, y){
+  r.xs[r.head] = x;
+  r.ys[r.head] = y;
+  r.head = (r.head + 1) % TOP_MAX_PTS;
+  if (r.size < TOP_MAX_PTS) r.size++;
+}
+
+function topStroke(r){
+  const n = r.size;
+  if (n < 2) return;
+
+  let idx = (r.head - n);
+  if (idx < 0) idx += TOP_MAX_PTS;
+
+  tctx.beginPath();
+  tctx.moveTo(r.xs[idx], r.ys[idx]);
+  for (let i = 1; i < n; i++){
+    idx++;
+    if (idx === TOP_MAX_PTS) idx = 0;
+    tctx.lineTo(r.xs[idx], r.ys[idx]);
+  }
+  tctx.stroke();
+}
+
+let topLastT = 0;
+const TOP_IDLE_FPS = 24;
+const TOP_IDLE_MS  = 1000 / TOP_IDLE_FPS;
+
+function drawTopRibbons(tNow){
+  try{
+    const activeTop = (topRibbonParticles.length > 0) || (!audioEl.paused);
+
+    if (!activeTop){
+      if (tNow - topLastT < TOP_IDLE_MS){
+        requestAnimationFrame(drawTopRibbons);
+        return;
+      }
+      topLastT = tNow;
+    }
+
+    tctx.clearRect(0,0,TOP_W,TOP_H);
+
+    tctx.lineCap = "round";
+    tctx.lineJoin = "round";
+
+    const many = topRibbonParticles.length > 18;
+    tctx.shadowBlur = many ? 10 : 16;
+    tctx.shadowColor = GLOW_A;
+
+    const t = tNow * 0.001;
+
+    for (let i = topRibbonParticles.length - 1; i >= 0; i--){
+      const r = topRibbonParticles[i];
+      r.life--;
+      if (r.life <= 0){
+        topRibbonParticles.splice(i,1);
+        continue;
+      }
+
+      r.a += Math.sin(t + r.seed) * 0.03;
+      r.x += Math.cos(r.a) * r.speed;
+      r.y += Math.sin(t*1.6 + r.seed) * 0.45 + 0.35;
+
+      if (r.x < -60) r.x = TOP_W + 60;
+      else if (r.x > TOP_W + 60) r.x = -60;
+
+      topAddPoint(r, r.x, r.y);
+
+      const alpha = Math.max(0, Math.min(1, r.life/200));
+      tctx.strokeStyle = `rgba(255,255,255,${0.05 + alpha*0.20})`;
+      tctx.lineWidth = 1.15;
+
+      topStroke(r);
+    }
+
+    requestAnimationFrame(drawTopRibbons);
+  } catch (err){
+    window.__showErr("drawTopRibbons crashed:\n" + (err && err.stack ? err.stack : String(err)));
+  }
+}
+requestAnimationFrame(drawTopRibbons);
+
+/* =========================================================
+   PROC WIDGET — unchanged
+   ========================================================= */
+const procLive = document.getElementById("procLive");
+const pr = procLive.getContext("2d");
+
+let procInit = false;
+let dpr = 1;
+
+const molecules = [];
+
+function resizeProcLive(){
+  const rect = procLive.getBoundingClientRect();
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  procLive.width  = Math.max(1, Math.floor(rect.width  * dpr));
+  procLive.height = Math.max(1, Math.floor(rect.height * dpr));
+  pr.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function initProc(){
+  resizeProcLive();
+
+  const rect = procLive.getBoundingClientRect();
+  const w = rect.width, h = rect.height;
+
+  molecules.length = 0;
+
+  for (let i = 0; i < 3; i++){
+    const core = {
+      x: w * (0.30 + i * 0.20) + (Math.random()-0.5)*18,
+      y: h * (0.45 + (Math.random()-0.5)*0.18),
+      vx: (Math.random()-0.5) * 0.55,
+      vy: (Math.random()-0.5) * 0.45,
+      seed: Math.random() * 1000,
+      orbiters: []
+    };
+
+    const orbCount = 4;
+    for (let k = 0; k < orbCount; k++){
+      core.orbiters.push({
+        a: Math.random() * Math.PI * 2,
+        r: 10 + Math.random() * 22,
+        sp: (0.012 + Math.random() * 0.018) * (Math.random() < 0.5 ? -1 : 1),
+        wob: 0.6 + Math.random() * 1.6,
+        size: 1.6 + Math.random() * 1.4
+      });
+    }
+
+    molecules.push(core);
+  }
+
+  const bg = getCSSVar("--bg") || "#080a1c";
+  pr.clearRect(0, 0, w, h);
+  pr.fillStyle = bg;
+  pr.fillRect(0, 0, w, h);
+
+  procInit = true;
+}
+
+window.addEventListener("resize", () => { procInit = false; });
+
+function bounceCore(m, w, h){
+  const pad = 22;
+  m.x += m.vx;
+  m.y += m.vy;
+
+  const t = performance.now() * 0.001;
+  m.vx += Math.sin(t*0.7 + m.seed + m.x*0.01) * 0.002;
+  m.vy += Math.cos(t*0.8 + m.seed + m.y*0.01) * 0.002;
+
+  m.vx = Math.max(-0.85, Math.min(0.85, m.vx));
+  m.vy = Math.max(-0.75, Math.min(0.75, m.vy));
+
+  if (m.x < pad){ m.x = pad; m.vx *= -1; }
+  if (m.x > w - pad){ m.x = w - pad; m.vx *= -1; }
+  if (m.y < pad){ m.y = pad; m.vy *= -1; }
+  if (m.y > h - pad){ m.y = h - pad; m.vy *= -1; }
+}
+
+function drawGlowDot(x, y, r, alpha){
+  pr.fillStyle = `rgba(234,242,255,${alpha})`;
+  pr.beginPath();
+  pr.arc(x, y, r, 0, Math.PI*2);
+  pr.fill();
+}
+
+function drawProc(){
+  if (!procInit) initProc();
+
+  const rect = procLive.getBoundingClientRect();
+  const w = rect.width, h = rect.height;
+
+  pr.globalCompositeOperation = "source-over";
+  pr.fillStyle = "rgba(8,10,28,0.055)";
+  pr.fillRect(0, 0, w, h);
+  pr.fillStyle = "rgba(0,0,0,0.020)";
+  pr.fillRect(0, 0, w, h);
+
+  pr.save();
+  pr.globalCompositeOperation = "lighter";
+  pr.shadowBlur = 22;
+  pr.shadowColor = "rgba(58,168,255,0.34)";
+  pr.lineCap = "round";
+  pr.lineJoin = "round";
+
+  const t = performance.now() * 0.001;
+  const allDots = [];
+
+  for (const m of molecules){
+    bounceCore(m, w, h);
+
+    drawGlowDot(m.x, m.y, 3.9, 0.20);
+
+    for (const o of m.orbiters){
+      o.a += o.sp;
+
+      const wob = 1 + Math.sin(t * o.wob + m.seed) * 0.08;
+      const rr = o.r * wob;
+
+      const ox = m.x + Math.cos(o.a) * rr;
+      const oy = m.y + Math.sin(o.a) * rr;
+
+      pr.lineWidth = 1.2;
+      pr.strokeStyle = "rgba(234,242,255,0.12)";
+      pr.beginPath();
+      pr.moveTo(m.x, m.y);
+      pr.lineTo(ox, oy);
+      pr.stroke();
+
+      drawGlowDot(ox, oy, o.size, 0.18);
+
+      allDots.push({x: ox, y: oy});
+    }
+  }
+
+  for (let i = 0; i < allDots.length; i++){
+    for (let j = i + 1; j < allDots.length; j++){
+      const a = allDots[i], b = allDots[j];
+      const dx = a.x - b.x, dy = a.y - b.y;
+      const d = Math.hypot(dx, dy);
+      if (d < 55){
+        const aa = (1 - d/55) * 0.14;
+        pr.lineWidth = 1.05;
+        pr.strokeStyle = `rgba(234,242,255,${aa})`;
+        pr.beginPath();
+        pr.moveTo(a.x, a.y);
+        pr.lineTo(b.x, b.y);
+        pr.stroke();
+      }
+    }
+  }
+
+  if (Math.random() < 0.10){
+    pr.shadowBlur = 0;
+    pr.fillStyle = "rgba(234,242,255,0.06)";
+    const s = 6 + Math.random()*18;
+    pr.fillRect(Math.random()*(w-s), Math.random()*(h-s), s, s);
+  }
+
+  pr.restore();
+  pr.globalCompositeOperation = "source-over";
+
+  requestAnimationFrame(drawProc);
+}
+requestAnimationFrame(drawProc);
+</script>
+<script>
+  // quick diagnostics: show a clearer error if jQuery is missing
+  if (!window.jQuery) {
+    const box = document.getElementById("errorBox");
+    if (box) {
+      box.style.display = "block";
+      box.textContent += "ROCKERY ERROR:\njquery-latest.min.js did not load (check path).\n\n";
+    }
+    console.error("ROCKERY ERROR: jQuery missing. Check jquery-latest.min.js path.");
+  }
+</script>
+
+<script src="fade.js"></script>
+</body>
+</html>
